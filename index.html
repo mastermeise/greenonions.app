@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Green Onions — Run to your beat.</title>
+<meta name="description" content="Green Onions tempo-matches the music you already own to your running cadence, in real time, without changing the pitch. Fully offline. No account, no subscription, nothing tracked.">
+
+<meta property="og:title" content="Green Onions — Run to your beat.">
+<meta property="og:description" content="Tempo-match your own music to your cadence. Pitch-preserved, fully offline, nothing tracked.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://greenonions.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E0F12">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='%234DD85B'/%3E%3Crect x='1' width='1' height='1' fill='%23D6EE3A'/%3E%3Crect y='1' width='1' height='1' fill='%23D6EE3A'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%234DD85B'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --grass:#4DD85B;
+  --lime:#D6EE3A;
+  --asphalt:#0E0F12;
+  --ink:#F2F4F0;
+  --muted:#9AA09B;
+  --line:rgba(242,244,240,.10);
+  --beat:.375s;          /* 160 bpm */
+  --maxw:1080px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--asphalt);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:clamp(64px,10vw,120px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+
+h1,h2,h3,.oswald{font-family:Oswald,Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1.04;margin:0}
+.eyebrow{
+  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.22em;
+  font-size:12px;font-weight:500;color:var(--lime);margin:0 0 20px
+}
+h2{font-size:clamp(30px,5.2vw,52px);font-weight:700;margin-bottom:20px}
+p{margin:0 0 18px}
+.lede{font-size:clamp(18px,2.3vw,22px);color:var(--muted);max-width:62ch}
+.muted{color:var(--muted)}
+
+/* ---------- header ---------- */
+header{padding:26px 0;position:relative;z-index:2}
+header .wrap{display:flex;align-items:center;gap:12px}
+.mark{display:flex;gap:3px}
+.mark i{width:9px;height:9px;display:block;border-radius:1px}
+.mark i:nth-child(1),.mark i:nth-child(4){background:var(--grass)}
+.mark i:nth-child(2),.mark i:nth-child(3){background:var(--lime)}
+.mark{display:grid;grid-template-columns:9px 9px;gap:3px}
+.mark-name{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(36px,6vw,64px);position:relative}
+.wordmark{
+  font-family:Oswald,Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(52px,13.5vw,168px);line-height:.9;letter-spacing:.005em;
+  margin:0 0 28px;
+}
+.wordmark span{display:block}
+.wordmark b{font-weight:inherit}
+.wordmark .l1 b:nth-child(1){font-weight:700}
+.wordmark .l1 b:nth-child(2){font-weight:300}
+.wordmark .l1 b:nth-child(3){font-weight:600}
+.wordmark .l1 b:nth-child(4){font-weight:400}
+.wordmark .l1 b:nth-child(5){font-weight:700}
+.wordmark .l2{color:var(--lime)}
+.wordmark .l2 b:nth-child(1){font-weight:500}
+.wordmark .l2 b:nth-child(2){font-weight:700}
+.wordmark .l2 b:nth-child(3){font-weight:300}
+.wordmark .l2 b:nth-child(4){font-weight:700}
+.wordmark .l2 b:nth-child(5){font-weight:400}
+.wordmark .l2 b:nth-child(6){font-weight:600}
+
+.tagline{
+  font-family:Oswald,sans-serif;text-transform:uppercase;font-weight:400;
+  font-size:clamp(18px,3vw,30px);letter-spacing:.06em;margin:0 0 26px;color:var(--ink)
+}
+.hero .lede{font-size:clamp(18px,2.4vw,23px);color:var(--muted);max-width:56ch;margin-bottom:36px}
+
+/* ---------- beat grid ---------- */
+.beatgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:0 0 40px;max-width:520px}
+.beatcol{display:grid;grid-template-rows:1fr 1fr;gap:5px}
+.beatcol i{
+  display:block;aspect-ratio:1/1;border-radius:2px;background:var(--grass);opacity:.20;
+  animation:beat calc(var(--beat) * 8) steps(1,end) infinite;
+  animation-delay:calc(var(--i) * var(--beat));
+}
+.beatcol i:nth-child(2){animation-name:beatAlt}
+@keyframes beat{
+  0%,12.4%{background:var(--lime);opacity:1}
+  12.5%,100%{background:var(--grass);opacity:.20}
+}
+@keyframes beatAlt{
+  0%,12.4%{background:var(--grass);opacity:1}
+  12.5%,100%{background:var(--lime);opacity:.16}
+}
+@media (prefers-reduced-motion:reduce){
+  .beatcol i{animation:none;opacity:.35}
+  .beatcol i:nth-child(2){background:var(--lime);opacity:.28}
+}
+
+.status{
+  display:inline-flex;align-items:center;gap:11px;
+  border:1px solid var(--line);border-radius:999px;padding:11px 20px;
+  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;
+  font-size:12.5px;font-weight:500;color:var(--ink)
+}
+.status .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--lime);flex:none;
+  animation:blink calc(var(--beat) * 2) ease-in-out infinite
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.status .dot{animation:none}}
+
+/* ---------- pitch ---------- */
+.big{font-size:clamp(22px,3.4vw,34px);line-height:1.35;font-weight:400;max-width:20ch;
+  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.big em{font-style:normal;color:var(--lime)}
+
+/* ---------- features ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.card{background:var(--asphalt);padding:32px 28px}
+.card h3{font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:.06em}
+.card p{font-size:15.5px;color:var(--muted);margin:0}
+.card .num{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:13px;color:var(--grass);
+  letter-spacing:.14em;display:block;margin-bottom:16px
+}
+
+/* ---------- quote ---------- */
+.quote{border-left:3px solid var(--lime);padding:6px 0 6px 28px;margin:0 0 22px;max-width:24ch}
+.quote p{
+  font-family:Oswald,sans-serif;text-transform:uppercase;font-weight:300;
+  font-size:clamp(26px,4.6vw,48px);line-height:1.12;margin:0;letter-spacing:.01em
+}
+.quote p em{font-style:normal;font-weight:600;color:var(--lime)}
+.attrib{font-size:14px;color:var(--muted);margin:0}
+
+/* ---------- lockscreen ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,72px);align-items:center}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.lockcard{
+  border:1px solid var(--line);border-radius:18px;padding:22px;
+  background:rgba(255,255,255,.028);max-width:400px
+}
+.lockcard .row{display:flex;align-items:center;gap:16px}
+.lockcard .meta{flex:1;min-width:0}
+.lockcard .title{font-size:15px;font-weight:600;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lockcard .artist{font-size:13.5px;color:var(--muted);margin:0}
+.lockcard .bpm{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:38px;line-height:1;color:var(--lime);
+  letter-spacing:.01em;font-variant-numeric:tabular-nums
+}
+.lockcard .bpm small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);
+  letter-spacing:.18em;text-transform:uppercase;margin-top:5px}
+.btns{display:flex;gap:11px}
+.btn{
+  width:52px;height:52px;border-radius:50%;border:0;flex:none;cursor:pointer;
+  font-family:Oswald,sans-serif;font-size:25px;font-weight:600;color:var(--asphalt);
+  display:flex;align-items:center;justify-content:center;line-height:1;padding:0;
+  transition:transform .1s ease
+}
+.btn:active{transform:scale(.92)}
+.btn.minus{background:var(--grass)}
+.btn.plus{background:linear-gradient(150deg,var(--lime),#c2dd28)}
+.hint{font-size:13.5px;color:var(--muted);margin:16px 0 0;text-align:center}
+
+/* ---------- who ---------- */
+.who{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden}
+@media (max-width:620px){.who{grid-template-columns:1fr}}
+.who > div{background:var(--asphalt);padding:34px 30px}
+.who h3{font-size:21px;font-weight:600;margin-bottom:12px}
+.who .rng{font-family:Oswald,sans-serif;font-weight:700;color:var(--lime);font-size:14px;
+  letter-spacing:.1em;display:block;margin-bottom:14px}
+.who p{font-size:15.5px;color:var(--muted);margin:0}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0 60px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--lime);border-color:var(--lime)}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="mark-name">Green Onions</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1 class="wordmark">
+      <span class="l1"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
+      <span class="l2"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
+    </h1>
+
+    <p class="tagline">Run to your beat.</p>
+
+    <div class="beatgrid" aria-hidden="true">
+      <div class="beatcol" style="--i:0"><i></i><i></i></div>
+      <div class="beatcol" style="--i:1"><i></i><i></i></div>
+      <div class="beatcol" style="--i:2"><i></i><i></i></div>
+      <div class="beatcol" style="--i:3"><i></i><i></i></div>
+      <div class="beatcol" style="--i:4"><i></i><i></i></div>
+      <div class="beatcol" style="--i:5"><i></i><i></i></div>
+      <div class="beatcol" style="--i:6"><i></i><i></i></div>
+      <div class="beatcol" style="--i:7"><i></i><i></i></div>
+    </div>
+
+    <p class="lede">
+      Green Onions stretches the music you already own to match your running cadence —
+      in real time, without changing the pitch. Your songs, at your tempo. Nothing sounds like a chipmunk.
+    </p>
+
+    <span class="status"><span class="dot"></span> Coming soon to iPhone</span>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The idea</p>
+    <p class="big">
+      Every running app makes you run to <em>their</em> playlist. This one runs to <em>yours</em>.
+    </p>
+    <p class="lede" style="margin-top:26px">
+      Tempo-matching apps hand you a catalog and a subscription. Playlist apps just sort songs into
+      BPM buckets and hope something fits. Green Onions does the harder thing: it analyzes the tracks
+      already on your phone and time-stretches them to your exact cadence as you run — so a song at
+      148&nbsp;BPM becomes a song at 165&nbsp;BPM, still in key, still sounding like itself.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What you get</p>
+    <h2>Built for one job</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Your own music</h3>
+        <p>Plays the files and iTunes purchases already on your phone. No catalog to browse, no licensing gaps, no "this song isn't available."</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Pitch-preserved stretch</h3>
+        <p>Real-time time-stretching that holds the original key. Songs speed up to your cadence without turning into chipmunks.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>Lock-screen control</h3>
+        <p>Nudge your target tempo up or down mid-run without unlocking your phone or breaking stride.</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>Works anywhere</h3>
+        <p>Fully offline. No signal, no problem — trails, tunnels, treadmills, airplane mode. Everything runs on the device.</p>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <h3>No account, ever</h3>
+        <p>No sign-up, no subscription, no ads. You don't make an account because there's nothing to make an account for.</p>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <h3>Nothing tracked</h3>
+        <p>No analytics, no telemetry, no profile. Your library and your runs stay on your phone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What surprised me</p>
+    <blockquote class="quote">
+      <p>I never thought I'd be able to run to <em>Neil Young</em>.</p>
+    </blockquote>
+    <p class="attrib">— Brian, building this thing</p>
+    <p class="lede" style="margin-top:30px">
+      That's the part I didn't expect. When any song can meet your cadence, "running music" stops being
+      a genre you tolerate and starts being the music you actually love. Records that were never
+      remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="eyebrow">Mid-run</p>
+        <h2>Turn it up a notch</h2>
+        <p class="lede">
+          You're in the home stretch and you want to push. Reach down, tap <strong style="color:var(--lime)">+</strong>
+          right on the lock screen, and the music comes with you — the tempo climbs to the pace you're
+          about to run. No unlocking, no fumbling, no stopping.
+        </p>
+        <p class="muted" style="font-size:15px">
+          Live Activity controls on the lock screen and Dynamic Island.
+        </p>
+      </div>
+      <div>
+        <div class="lockcard">
+          <div class="row">
+            <div class="bpm">168<small>Target BPM</small></div>
+            <div class="meta">
+              <p class="title">Harvest Moon</p>
+              <p class="artist">Neil Young</p>
+            </div>
+            <div class="btns">
+              <button class="btn minus" type="button" aria-label="Decrease tempo">&minus;</button>
+              <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint">Illustration of the lock-screen controls</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Who it's for</p>
+    <h2>Anyone keeping time</h2>
+    <div class="who">
+      <div>
+        <span class="rng">150 – 180 SPM</span>
+        <h3>Runners</h3>
+        <p>Hold a steady cadence instead of drifting with whatever song shuffles up. Dial in a target,
+        nudge it as you go, and let the music do the metronome work. Cadence is a rhythm you can hold
+        at any pace — that's exactly why matching it works.</p>
+      </div>
+      <div>
+        <span class="rng">120 – 180+ SPM</span>
+        <h3>Jump rope</h3>
+        <p>Steady rounds at a moderate tempo, or speed work up top. Set the beat, keep the rhythm,
+        stop counting in your head.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Brian Meise</span>
+    <nav>
+      <a href="/privacy.html">Privacy</a>
+      <a href="https://brianmeise.com">brianmeise.com</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
