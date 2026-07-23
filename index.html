@@ -57,7 +57,7 @@ p{margin:0 0 18px}
 .muted{color:var(--muted)}
 
 /* ---------- header ---------- */
-header{padding:26px 0;position:relative;z-index:2}
+header{padding:20px 0;position:relative;z-index:2}
 header .wrap{display:flex;align-items:center;gap:12px}
 /* Cells always sit flush, square corners — same rule as the big lockup. */
 .mark{display:grid;grid-template-columns:10px 10px;gap:0}
@@ -67,7 +67,25 @@ header .wrap{display:flex;align-items:center;gap:12px}
 .mark-name{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600}
 
 /* ---------- hero ---------- */
-.hero{padding-top:clamp(30px,5vw,58px);position:relative}
+/* Hero is short now — headline, one line of promise, the payoff quote, the ask —
+   so it breathes rather than fighting to fit a visual above the fold. */
+.hero{padding-top:clamp(24px,4vw,48px);position:relative}
+.hero h1{font-size:clamp(46px,8.2vw,80px);font-weight:700;margin:0 0 18px}
+.hero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--muted);max-width:52ch;margin-bottom:clamp(34px,5vw,48px)}
+.hero .quote{margin-bottom:10px;max-width:30ch}
+.hero .quote p{font-size:clamp(22px,3.6vw,32px)}
+.hero .attrib{margin-bottom:clamp(28px,4vw,36px)}
+
+/* ---------- cta ---------- */
+.cta{
+  display:inline-flex;align-items:center;background:var(--lime);color:var(--asphalt);
+  text-decoration:none;font-family:Oswald,sans-serif;text-transform:uppercase;
+  letter-spacing:.12em;font-size:14px;font-weight:600;padding:14px 28px;border-radius:999px;
+  transition:transform .12s ease,filter .12s ease
+}
+.cta:hover{filter:brightness(1.08)}
+.cta:active{transform:scale(.97)}
+.ctasub{font-size:13.5px;color:var(--muted);margin:12px 0 0}
 
 /* ---------- brand lockup ----------
    The mark: two rows of flush square cells, both hard-left. GREEN is five
@@ -104,11 +122,8 @@ header .wrap{display:flex;align-items:center;gap:12px}
 .lockup .r2 b:nth-child(5){font-weight:400}
 .lockup .r2 b:nth-child(6){font-weight:600}
 
-.tagline{
-  font-family:Oswald,sans-serif;text-transform:uppercase;font-weight:400;
-  font-size:clamp(18px,3vw,30px);letter-spacing:.06em;margin:0 0 26px;color:var(--ink)
-}
-.hero .lede{font-size:clamp(18px,2.4vw,23px);color:var(--muted);max-width:56ch;margin-bottom:36px}
+/* The interactive BPM-sync hero visual that lived here was pulled for reading
+   as too technical up top. Preserved, working, in design/explorations.html. */
 
 /* ---------- beat bar ----------
    The second brand element, used sparingly: ONE layer of flush checkered cells
@@ -130,19 +145,6 @@ header .wrap{display:flex;align-items:center;gap:12px}
 @media (prefers-reduced-motion:reduce){
   .beatbar i::after{animation:none}
 }
-.status{
-  display:inline-flex;align-items:center;gap:11px;
-  border:1px solid var(--line);border-radius:999px;padding:11px 20px;
-  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;
-  font-size:12.5px;font-weight:500;color:var(--ink)
-}
-.status .dot{
-  width:8px;height:8px;border-radius:50%;background:var(--lime);flex:none;
-  animation:blink calc(var(--beat) * 2) ease-in-out infinite
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-@media (prefers-reduced-motion:reduce){.status .dot{animation:none}}
-
 /* ---------- pitch ---------- */
 .big{font-size:clamp(22px,3.4vw,34px);line-height:1.35;font-weight:400;max-width:20ch;
   font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
@@ -217,28 +219,37 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 </head>
 <body>
 
-<section class="hero">
-  <!-- Flush to the viewport's left edge on purpose — it sits outside .wrap. -->
-  <h1 class="lockup" aria-label="Green Onions">
-    <span class="row r1" aria-hidden="true"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
-    <span class="row r2" aria-hidden="true"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
-  </h1>
-
+<header>
   <div class="wrap">
-    <p class="tagline">Run to your beat.</p>
+    <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="mark-name">Green Onions</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Run to your beat.</h1>
 
     <p class="lede">
-      Green Onions stretches the music you already own to match your running cadence —
-      in real time, without changing the pitch. Your songs, at your tempo. Nothing sounds like a chipmunk.
+      Set your cadence. Every song in your library stretches to meet it —
+      in real time, in the original key.
     </p>
 
-    <span class="status"><span class="dot"></span> Coming soon to iPhone</span>
+    <blockquote class="quote">
+      <p>I never knew I could run to <em>Neil Young</em>.</p>
+    </blockquote>
+    <p class="attrib" style="margin-bottom:clamp(28px,4vw,36px)">— Brian, who built it</p>
+
+    <!-- SWAP: public TestFlight invite link goes in this href. -->
+    <a class="cta" href="#">Join the TestFlight beta</a>
+    <p class="ctasub">Free · iPhone · no account, no subscription</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <p class="eyebrow">The idea</p>
+    <h2 style="margin-bottom:26px">Match the beat to your feet</h2>
     <p class="big">
       Every running app makes you run to <em>their</em> playlist. This one runs to <em>yours</em>.
     </p>
@@ -292,13 +303,10 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">What surprised me</p>
-    <blockquote class="quote">
-      <p>I never thought I'd be able to run to <em>Neil Young</em>.</p>
-    </blockquote>
-    <p class="attrib">— Brian, building this thing</p>
-    <p class="lede" style="margin-top:30px">
-      That's the part I didn't expect. When any song can meet your cadence, "running music" stops being
+    <p class="eyebrow">The surprise</p>
+    <h2>Your whole library is running music</h2>
+    <p class="lede">
+      That was the part I didn't expect. When any song can meet your cadence, "running music" stops being
       a genre you tolerate and starts being the music you actually love. Records that were never
       remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
     </p>
@@ -361,6 +369,14 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     </div>
   </div>
 </section>
+
+<!-- The full lockup closes the page instead of opening it: the hero now leads
+     with the headline, so this is the sign-off. Flush to the viewport's left
+     edge on purpose — it sits outside .wrap. -->
+<div class="lockup" aria-hidden="true" style="margin-bottom:0">
+  <span class="row r1"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
+  <span class="row r2"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
+</div>
 
 <div class="beatbar" aria-hidden="true">
   <i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i>
