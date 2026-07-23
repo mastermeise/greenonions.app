@@ -59,34 +59,50 @@ p{margin:0 0 18px}
 /* ---------- header ---------- */
 header{padding:26px 0;position:relative;z-index:2}
 header .wrap{display:flex;align-items:center;gap:12px}
-.mark{display:flex;gap:3px}
-.mark i{width:9px;height:9px;display:block;border-radius:1px}
+/* Cells always sit flush, square corners — same rule as the big lockup. */
+.mark{display:grid;grid-template-columns:10px 10px;gap:0}
+.mark i{width:10px;height:10px;display:block}
 .mark i:nth-child(1),.mark i:nth-child(4){background:var(--grass)}
 .mark i:nth-child(2),.mark i:nth-child(3){background:var(--lime)}
-.mark{display:grid;grid-template-columns:9px 9px;gap:3px}
 .mark-name{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600}
 
 /* ---------- hero ---------- */
-.hero{padding-top:clamp(36px,6vw,64px);position:relative}
-.wordmark{
+.hero{padding-top:clamp(30px,5vw,58px);position:relative}
+
+/* ---------- brand lockup ----------
+   The mark: two rows of flush square cells, both hard-left. GREEN is five
+   cells, ONIONS is six, so the bottom row steps one cell past the top — that
+   stagger is the silhouette. Glyphs are knocked out in asphalt. Never gapped,
+   never rounded. On the site it bleeds to the viewport's left edge. */
+.lockup{
+  --cell:clamp(46px,11.5vw,92px);
+  margin:0 0 clamp(26px,4vw,40px);
   font-family:Oswald,Impact,sans-serif;text-transform:uppercase;
-  font-size:clamp(52px,13.5vw,168px);line-height:.9;letter-spacing:.005em;
-  margin:0 0 28px;
+  line-height:1;letter-spacing:0;
 }
-.wordmark span{display:block}
-.wordmark b{font-weight:inherit}
-.wordmark .l1 b:nth-child(1){font-weight:700}
-.wordmark .l1 b:nth-child(2){font-weight:300}
-.wordmark .l1 b:nth-child(3){font-weight:600}
-.wordmark .l1 b:nth-child(4){font-weight:400}
-.wordmark .l1 b:nth-child(5){font-weight:700}
-.wordmark .l2{color:var(--lime)}
-.wordmark .l2 b:nth-child(1){font-weight:500}
-.wordmark .l2 b:nth-child(2){font-weight:700}
-.wordmark .l2 b:nth-child(3){font-weight:300}
-.wordmark .l2 b:nth-child(4){font-weight:700}
-.wordmark .l2 b:nth-child(5){font-weight:400}
-.wordmark .l2 b:nth-child(6){font-weight:600}
+.lockup .row{display:flex;gap:0}
+.lockup b{
+  width:var(--cell);height:var(--cell);
+  display:flex;align-items:center;justify-content:center;
+  font-size:calc(var(--cell) * .68);color:var(--asphalt);
+}
+/* Checkerboard by row+column parity, so no two touching cells share a colour. */
+.lockup .r1 b:nth-child(odd){background:var(--grass)}
+.lockup .r1 b:nth-child(even){background:var(--lime)}
+.lockup .r2 b:nth-child(odd){background:var(--lime)}
+.lockup .r2 b:nth-child(even){background:var(--grass)}
+/* Fixed weight per glyph — varied for energy, never animated. */
+.lockup .r1 b:nth-child(1){font-weight:700}
+.lockup .r1 b:nth-child(2){font-weight:300}
+.lockup .r1 b:nth-child(3){font-weight:600}
+.lockup .r1 b:nth-child(4){font-weight:400}
+.lockup .r1 b:nth-child(5){font-weight:700}
+.lockup .r2 b:nth-child(1){font-weight:500}
+.lockup .r2 b:nth-child(2){font-weight:700}
+.lockup .r2 b:nth-child(3){font-weight:300}
+.lockup .r2 b:nth-child(4){font-weight:700}
+.lockup .r2 b:nth-child(5){font-weight:400}
+.lockup .r2 b:nth-child(6){font-weight:600}
 
 .tagline{
   font-family:Oswald,sans-serif;text-transform:uppercase;font-weight:400;
@@ -94,28 +110,26 @@ header .wrap{display:flex;align-items:center;gap:12px}
 }
 .hero .lede{font-size:clamp(18px,2.4vw,23px);color:var(--muted);max-width:56ch;margin-bottom:36px}
 
-/* ---------- beat grid ---------- */
-.beatgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:0 0 40px;max-width:520px}
-.beatcol{display:grid;grid-template-rows:1fr 1fr;gap:5px}
-.beatcol i{
-  display:block;aspect-ratio:1/1;border-radius:2px;background:var(--grass);opacity:.20;
-  animation:beat calc(var(--beat) * 8) steps(1,end) infinite;
-  animation-delay:calc(var(--i) * var(--beat));
+/* ---------- beat bar ----------
+   The second brand element, used sparingly: ONE layer of flush checkered cells
+   spanning the full width. A single cell flips to its opposite colour and
+   travels the bar — the grid as beat sequencer, stretched out. */
+.beatbar{display:flex;width:100%;overflow:hidden;--bar-cell:clamp(46px,7.5vw,88px)}
+.beatbar i{
+  position:relative;flex:0 0 var(--bar-cell);
+  height:calc(var(--bar-cell) * .46);
+  background:var(--grass);--on:var(--lime);
 }
-.beatcol i:nth-child(2){animation-name:beatAlt}
-@keyframes beat{
-  0%,12.4%{background:var(--lime);opacity:1}
-  12.5%,100%{background:var(--grass);opacity:.20}
+.beatbar i:nth-child(even){background:var(--lime);--on:var(--grass)}
+.beatbar i::after{
+  content:"";position:absolute;inset:0;background:var(--on);opacity:0;
+  animation:barflip calc(var(--beat) * 16) steps(1,end) infinite;
+  animation-delay:calc(var(--n) * var(--beat));
 }
-@keyframes beatAlt{
-  0%,12.4%{background:var(--grass);opacity:1}
-  12.5%,100%{background:var(--lime);opacity:.16}
-}
+@keyframes barflip{0%,6.2%{opacity:1} 6.3%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  .beatcol i{animation:none;opacity:.35}
-  .beatcol i:nth-child(2){background:var(--lime);opacity:.28}
+  .beatbar i::after{animation:none}
 }
-
 .status{
   display:inline-flex;align-items:center;gap:11px;
   border:1px solid var(--line);border-radius:999px;padding:11px 20px;
@@ -203,32 +217,15 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-    <span class="mark-name">Green Onions</span>
-  </div>
-</header>
-
 <section class="hero">
+  <!-- Flush to the viewport's left edge on purpose — it sits outside .wrap. -->
+  <h1 class="lockup" aria-label="Green Onions">
+    <span class="row r1" aria-hidden="true"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
+    <span class="row r2" aria-hidden="true"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
+  </h1>
+
   <div class="wrap">
-    <h1 class="wordmark">
-      <span class="l1"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
-      <span class="l2"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
-    </h1>
-
     <p class="tagline">Run to your beat.</p>
-
-    <div class="beatgrid" aria-hidden="true">
-      <div class="beatcol" style="--i:0"><i></i><i></i></div>
-      <div class="beatcol" style="--i:1"><i></i><i></i></div>
-      <div class="beatcol" style="--i:2"><i></i><i></i></div>
-      <div class="beatcol" style="--i:3"><i></i><i></i></div>
-      <div class="beatcol" style="--i:4"><i></i><i></i></div>
-      <div class="beatcol" style="--i:5"><i></i><i></i></div>
-      <div class="beatcol" style="--i:6"><i></i><i></i></div>
-      <div class="beatcol" style="--i:7"><i></i><i></i></div>
-    </div>
 
     <p class="lede">
       Green Onions stretches the music you already own to match your running cadence —
@@ -364,6 +361,13 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     </div>
   </div>
 </section>
+
+<div class="beatbar" aria-hidden="true">
+  <i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i>
+  <i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i>
+  <i style="--n:8"></i><i style="--n:9"></i><i style="--n:10"></i><i style="--n:11"></i>
+  <i style="--n:12"></i><i style="--n:13"></i><i style="--n:14"></i><i style="--n:15"></i>
+</div>
 
 <footer>
   <div class="wrap">
