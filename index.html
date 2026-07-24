@@ -42,7 +42,7 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
-.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(25px,6vw,50px)}
 section{padding:clamp(64px,10vw,120px) 0;border-top:1px solid var(--line)}
 section:first-of-type{border-top:0}
 
@@ -57,24 +57,61 @@ p{margin:0 0 18px}
 .muted{color:var(--muted)}
 
 /* ---------- header ---------- */
-header{padding:20px 0;position:relative;z-index:2}
-header .wrap{display:flex;align-items:center;gap:12px}
-/* Cells always sit flush, square corners — same rule as the big lockup. */
-.mark{display:grid;grid-template-columns:10px 10px;gap:0}
-.mark i{width:10px;height:10px;display:block}
-.mark i:nth-child(1),.mark i:nth-child(4){background:var(--grass)}
-.mark i:nth-child(2),.mark i:nth-child(3){background:var(--lime)}
-.mark-name{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600}
+header{padding:clamp(28px,5vw,44px) 0 20px;position:relative;z-index:2}
+header .wrap{display:flex;align-items:center}
+
+/* ---------- brand mark (header) ----------
+   The splash choreography, live: cells assemble at random, run the counted
+   phrase (top/bottom · checkerboard groove · column roll · flash), then
+   settle into the resting checkerboard and stay put — this IS the header
+   logo from then on, not a preroll that hands off to something else.
+   Deliberately INSET here (breathing room + left-aligned with page content)
+   — overrides the big lockup's flush-left rule on purpose, header only. */
+.brandmark{display:inline-flex;flex-direction:column;gap:0;line-height:1}
+.brandmark .bm-row{display:flex;gap:0}
+.brandmark .bm-cell{
+  --size:clamp(42px,7.2vw,56px);
+  width:var(--size);height:var(--size);
+  display:flex;align-items:center;justify-content:center;
+  font-family:Oswald,Impact,sans-serif;text-transform:uppercase;
+  font-size:calc(var(--size) * .66);color:var(--asphalt);
+  background:var(--c-base);
+  opacity:0;transform:scale(.34);
+}
+.brandmark .bm-cell.appear{
+  opacity:1;transform:scale(1);
+  transition:transform .34s cubic-bezier(.34,1.56,.64,1),opacity .2s ease-out;
+}
+.brandmark .bm-cell.hit{background:var(--c-flip)}
+.brandmark .bm-cell.bm-blank{background:transparent!important}
+
+/* Checkerboard by row+column parity, same rule as the big lockup. */
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(odd){--c-base:var(--grass);--c-flip:var(--lime)}
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(even){--c-base:var(--lime);--c-flip:var(--grass)}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(odd){--c-base:var(--lime);--c-flip:var(--grass)}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(even){--c-base:var(--grass);--c-flip:var(--lime)}
+/* Fixed weight per glyph — varied for energy, never animated. Same pattern as the wordmark. */
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(1){font-weight:700}
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(2){font-weight:300}
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(3){font-weight:600}
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(4){font-weight:400}
+.brandmark .bm-row:nth-child(1) .bm-cell:nth-child(5){font-weight:700}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(1){font-weight:500}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(2){font-weight:700}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(3){font-weight:300}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(4){font-weight:700}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(5){font-weight:400}
+.brandmark .bm-row:nth-child(2) .bm-cell:nth-child(6){font-weight:600}
+@media (prefers-reduced-motion:reduce){
+  .brandmark .bm-cell{transition:none}
+}
 
 /* ---------- hero ---------- */
-/* Hero is short now — headline, one line of promise, the payoff quote, the ask —
-   so it breathes rather than fighting to fit a visual above the fold. */
+/* Hero is short now — headline, one line of promise, the ask, the screenshot —
+   so it breathes rather than fighting to fit too much above the fold. */
 .hero{padding-top:clamp(24px,4vw,48px);position:relative}
 .hero h1{font-size:clamp(46px,8.2vw,80px);font-weight:700;margin:0 0 18px}
-.hero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--muted);max-width:52ch;margin-bottom:clamp(34px,5vw,48px)}
-.hero .quote{margin-bottom:10px;max-width:30ch}
-.hero .quote p{font-size:clamp(22px,3.6vw,32px)}
-.hero .attrib{margin-bottom:clamp(28px,4vw,36px)}
+.hero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--muted);max-width:52ch}
 
 /* ---------- cta ---------- */
 .cta{
@@ -87,64 +124,17 @@ header .wrap{display:flex;align-items:center;gap:12px}
 .cta:active{transform:scale(.97)}
 .ctasub{font-size:13.5px;color:var(--muted);margin:12px 0 0}
 
-/* ---------- brand lockup ----------
-   The mark: two rows of flush square cells, both hard-left. GREEN is five
-   cells, ONIONS is six, so the bottom row steps one cell past the top — that
-   stagger is the silhouette. Glyphs are knocked out in asphalt. Never gapped,
-   never rounded. On the site it bleeds to the viewport's left edge. */
-.lockup{
-  --cell:clamp(46px,11.5vw,92px);
-  margin:0 0 clamp(26px,4vw,40px);
-  font-family:Oswald,Impact,sans-serif;text-transform:uppercase;
-  line-height:1;letter-spacing:0;
-}
-.lockup .row{display:flex;gap:0}
-.lockup b{
-  width:var(--cell);height:var(--cell);
-  display:flex;align-items:center;justify-content:center;
-  font-size:calc(var(--cell) * .68);color:var(--asphalt);
-}
-/* Checkerboard by row+column parity, so no two touching cells share a colour. */
-.lockup .r1 b:nth-child(odd){background:var(--grass)}
-.lockup .r1 b:nth-child(even){background:var(--lime)}
-.lockup .r2 b:nth-child(odd){background:var(--lime)}
-.lockup .r2 b:nth-child(even){background:var(--grass)}
-/* Fixed weight per glyph — varied for energy, never animated. */
-.lockup .r1 b:nth-child(1){font-weight:700}
-.lockup .r1 b:nth-child(2){font-weight:300}
-.lockup .r1 b:nth-child(3){font-weight:600}
-.lockup .r1 b:nth-child(4){font-weight:400}
-.lockup .r1 b:nth-child(5){font-weight:700}
-.lockup .r2 b:nth-child(1){font-weight:500}
-.lockup .r2 b:nth-child(2){font-weight:700}
-.lockup .r2 b:nth-child(3){font-weight:300}
-.lockup .r2 b:nth-child(4){font-weight:700}
-.lockup .r2 b:nth-child(5){font-weight:400}
-.lockup .r2 b:nth-child(6){font-weight:600}
-
 /* The interactive BPM-sync hero visual that lived here was pulled for reading
    as too technical up top. Preserved, working, in design/explorations.html. */
 
 /* ---------- beat bar ----------
-   The second brand element, used sparingly: ONE layer of flush checkered cells
-   spanning the full width. A single cell flips to its opposite colour and
-   travels the bar — the grid as beat sequencer, stretched out. */
-.beatbar{display:flex;width:100%;overflow:hidden;--bar-cell:clamp(46px,7.5vw,88px)}
-.beatbar i{
-  position:relative;flex:0 0 var(--bar-cell);
-  height:calc(var(--bar-cell) * .46);
-  background:var(--grass);--on:var(--lime);
-}
-.beatbar i:nth-child(even){background:var(--lime);--on:var(--grass)}
-.beatbar i::after{
-  content:"";position:absolute;inset:0;background:var(--on);opacity:0;
-  animation:barflip calc(var(--beat) * 16) steps(1,end) infinite;
-  animation-delay:calc(var(--n) * var(--beat));
-}
-@keyframes barflip{0%,6.2%{opacity:1} 6.3%,100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){
-  .beatbar i::after{animation:none}
-}
+   The closing brand element: a static 4-cell checkerboard strip, flush to
+   the very bottom of the page (after footer, no bottom margin) — matches
+   the app's own 4-cell BeatGrid rather than the old 16-cell animated sweep.
+   Resting state only, no flip/travel animation. */
+.beatbar{display:flex;width:100%}
+.beatbar i{flex:1 1 0;height:clamp(24px,4vw,44px);background:var(--grass)}
+.beatbar i:nth-child(even){background:var(--lime)}
 /* ---------- pitch ---------- */
 .big{font-size:clamp(22px,3.4vw,34px);line-height:1.35;font-weight:400;max-width:20ch;
   font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
@@ -170,9 +160,53 @@ header .wrap{display:flex;align-items:center;gap:12px}
 .quote p em{font-style:normal;font-weight:600;color:var(--lime)}
 .attrib{font-size:14px;color:var(--muted);margin:0}
 
+/* Quote, boxed — lives in "The surprise" section now, not the hero. Same
+   quote/attrib pair, just inside a card so it reads as a testimonial beat
+   rather than running straight into body copy. */
+.quotecard{
+  border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.028);
+  padding:clamp(26px,4vw,38px) clamp(26px,4vw,40px);margin-top:clamp(28px,4.5vw,40px);
+  max-width:36ch;
+}
+.quotecard .quote{border-left:0;padding:0;margin:0 0 10px;max-width:none}
+.quotecard .quote p{font-size:clamp(22px,3.2vw,30px)}
+
 /* ---------- lockscreen ---------- */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,72px);align-items:center}
 @media (max-width:760px){.split{grid-template-columns:1fr}}
+
+/* ---------- hero screenshot ----------
+   A real Now Playing screenshot, not an illustration — proof that the
+   song BPM / target BPM relationship in the copy is a real screen, not a
+   mockup. No device bezel graphic; the rounded corners + hairline border
+   are enough to read as a screen without competing with the brand's flat,
+   graphic language. */
+.herophone{
+  max-width:300px;margin:0 auto;position:relative;
+  padding:14px;border-radius:44px;
+  background:linear-gradient(160deg,#24272e,#101216 65%);
+  box-shadow:
+    0 30px 70px -18px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+/* Ambient glow so the phone lifts off a background that's the same near-black —
+   a plain drop shadow disappears against asphalt-on-asphalt. */
+.herophone::before{
+  content:"";position:absolute;inset:-15%;z-index:-1;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(214,238,58,.14),rgba(77,216,91,.08) 55%,transparent 75%);
+  filter:blur(20px);
+}
+.herophone .screen{position:relative;border-radius:32px;overflow:hidden;background:var(--asphalt)}
+.herophone .screen img{display:block;width:100%;height:auto}
+/* The "slight shine" — a soft diagonal highlight, like light on a screen protector. */
+.herophone .screen::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,
+    rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 22%,
+    rgba(255,255,255,0) 78%, rgba(255,255,255,.06) 100%);
+}
+@media (max-width:760px){.herophone{margin-top:clamp(28px,6vw,40px)}}
 .lockcard{
   border:1px solid var(--line);border-radius:18px;padding:22px;
   background:rgba(255,255,255,.028);max-width:400px
@@ -221,44 +255,77 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 <header>
   <div class="wrap">
-    <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-    <span class="mark-name">Green Onions</span>
+    <div class="brandmark" id="brandmark" role="img" aria-label="Green Onions">
+      <div class="bm-row">
+        <b class="bm-cell">G</b><b class="bm-cell">R</b><b class="bm-cell">E</b><b class="bm-cell">E</b><b class="bm-cell">N</b><b class="bm-cell bm-blank"></b>
+      </div>
+      <div class="bm-row">
+        <b class="bm-cell">O</b><b class="bm-cell">N</b><b class="bm-cell">I</b><b class="bm-cell">O</b><b class="bm-cell">N</b><b class="bm-cell">S</b>
+      </div>
+    </div>
+    <noscript><style>.brandmark .bm-cell{opacity:1!important;transform:none!important}</style></noscript>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
-    <h1>Run to your beat.</h1>
+    <div class="split">
+      <div>
+        <h1>Match the beat to your feet.</h1>
 
-    <p class="lede">
-      Set your cadence. Every song in your library stretches to meet it —
-      in real time, in the original key.
-    </p>
+        <p class="lede" style="margin-bottom:clamp(28px,4vw,36px)">
+          There's a feeling when your stride locks onto the beat exactly — every
+          step landing right on time. Now it happens on every run, with every
+          song you already own.
+        </p>
 
-    <blockquote class="quote">
-      <p>I never knew I could run to <em>Neil Young</em>.</p>
-    </blockquote>
-    <p class="attrib" style="margin-bottom:clamp(28px,4vw,36px)">— Brian, who built it</p>
+        <!-- SWAP: public TestFlight invite link goes in this href. -->
+        <a class="cta" href="#">Join the TestFlight beta</a>
+        <p class="ctasub">Free · iPhone · no account, no subscription</p>
+      </div>
 
-    <!-- SWAP: public TestFlight invite link goes in this href. -->
-    <a class="cta" href="#">Join the TestFlight beta</a>
-    <p class="ctasub">Free · iPhone · no account, no subscription</p>
+      <div class="herophone">
+        <div class="screen">
+          <img src="img/nowplaying.png" loading="eager"
+            alt="Green Onions Now Playing screen: target 155 BPM, song 100 BPM, playing at 1.56× to bridge them">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">The idea</p>
-    <h2 style="margin-bottom:26px">Match the beat to your feet</h2>
-    <p class="big">
-      Every running app makes you run to <em>their</em> playlist. This one runs to <em>yours</em>.
-    </p>
-    <p class="lede" style="margin-top:26px">
-      Tempo-matching apps hand you a catalog and a subscription. Playlist apps just sort songs into
-      BPM buckets and hope something fits. Green Onions does the harder thing: it analyzes the tracks
-      already on your phone and time-stretches them to your exact cadence as you run — so a song at
-      148&nbsp;BPM becomes a song at 165&nbsp;BPM, still in key, still sounding like itself.
-    </p>
+    <div class="split">
+      <div>
+        <p class="eyebrow">On your lock screen</p>
+        <h2>Turn it up a notch</h2>
+        <p class="lede">
+          The target BPM control lives right on your lock screen. Reach down mid-run,
+          tap <strong style="color:var(--lime)">+</strong>, and the tempo climbs to meet
+          you — no unlocking your phone, no fumbling, no stopping.
+        </p>
+        <p class="muted" style="font-size:15px">
+          A Live Activity, also available in the Dynamic Island.
+        </p>
+      </div>
+      <div>
+        <div class="lockcard">
+          <div class="row">
+            <div class="bpm">168<small>Target BPM</small></div>
+            <div class="meta">
+              <p class="title">Harvest Moon</p>
+              <p class="artist">Neil Young</p>
+            </div>
+            <div class="btns">
+              <button class="btn minus" type="button" aria-label="Decrease tempo">&minus;</button>
+              <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint">Illustration of the lock-screen controls</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -310,40 +377,11 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       a genre you tolerate and starts being the music you actually love. Records that were never
       remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
     </p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="split">
-      <div>
-        <p class="eyebrow">Mid-run</p>
-        <h2>Turn it up a notch</h2>
-        <p class="lede">
-          You're in the home stretch and you want to push. Reach down, tap <strong style="color:var(--lime)">+</strong>
-          right on the lock screen, and the music comes with you — the tempo climbs to the pace you're
-          about to run. No unlocking, no fumbling, no stopping.
-        </p>
-        <p class="muted" style="font-size:15px">
-          Live Activity controls on the lock screen and Dynamic Island.
-        </p>
-      </div>
-      <div>
-        <div class="lockcard">
-          <div class="row">
-            <div class="bpm">168<small>Target BPM</small></div>
-            <div class="meta">
-              <p class="title">Harvest Moon</p>
-              <p class="artist">Neil Young</p>
-            </div>
-            <div class="btns">
-              <button class="btn minus" type="button" aria-label="Decrease tempo">&minus;</button>
-              <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
-            </div>
-          </div>
-        </div>
-        <p class="hint">Illustration of the lock-screen controls</p>
-      </div>
+    <div class="quotecard">
+      <blockquote class="quote">
+        <p>I never knew I could run to <em>Neil Young</em>.</p>
+      </blockquote>
+      <p class="attrib">— Brian, who built it</p>
     </div>
   </div>
 </section>
@@ -370,21 +408,6 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   </div>
 </section>
 
-<!-- The full lockup closes the page instead of opening it: the hero now leads
-     with the headline, so this is the sign-off. Flush to the viewport's left
-     edge on purpose — it sits outside .wrap. -->
-<div class="lockup" aria-hidden="true" style="margin-bottom:0">
-  <span class="row r1"><b>G</b><b>R</b><b>E</b><b>E</b><b>N</b></span>
-  <span class="row r2"><b>O</b><b>N</b><b>I</b><b>O</b><b>N</b><b>S</b></span>
-</div>
-
-<div class="beatbar" aria-hidden="true">
-  <i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i>
-  <i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i>
-  <i style="--n:8"></i><i style="--n:9"></i><i style="--n:10"></i><i style="--n:11"></i>
-  <i style="--n:12"></i><i style="--n:13"></i><i style="--n:14"></i><i style="--n:15"></i>
-</div>
-
 <footer>
   <div class="wrap">
     <span>© 2026 Brian Meise</span>
@@ -394,6 +417,69 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     </nav>
   </div>
 </footer>
+
+<!-- Ground line: static 4-cell checkerboard, flush to the very bottom of the
+     page — the last thing on it, no margin below. -->
+<div class="beatbar" aria-hidden="true">
+  <i></i><i></i><i></i><i></i>
+</div>
+
+<script>
+// Header brand mark — the app splash choreography (SplashView.swift), minus
+// the scatter/hand-off phase, since this mark IS the resting header logo,
+// not a preroll. Phase 1 assembles the cells at random; phase 2 runs the
+// counted phrase (top/bottom, checkerboard groove, column roll, flash);
+// then it just settles into the resting checkerboard and stays.
+(function () {
+  var root = document.getElementById('brandmark');
+  if (!root) return;
+  var all = Array.prototype.slice.call(root.querySelectorAll('.bm-cell'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduce) {
+    all.forEach(function (c) { c.classList.add('appear'); });
+    return;
+  }
+
+  var COLS = 6;
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function range(n) { return Array.from({ length: n }, function (_, i) { return i; }); }
+  function parity(p) { return range(12).filter(function (i) { return ((i % COLS) + Math.floor(i / COLS)) % 2 === p; }); }
+  function cols(cs) { return range(12).filter(function (i) { return cs.indexOf(i % COLS) !== -1; }); }
+  function hitSet(idxs) {
+    all.forEach(function (c) { c.classList.remove('hit'); });
+    idxs.forEach(function (i) { if (all[i]) all[i].classList.add('hit'); });
+  }
+
+  async function run() {
+    // Phase 1 — assemble at random.
+    var order = all.slice().sort(function () { return Math.random() - 0.5; });
+    for (var i = 0; i < order.length; i++) {
+      order[i].classList.add('appear');
+      await sleep(50);
+    }
+    await sleep(280);
+
+    // Phase 2 — the counted phrase.
+    var B = 260;
+    var steps = [
+      [range(6), B], [range(12).slice(6), B],
+      [parity(1), B], [parity(0), B], [parity(1), B * 0.6], [parity(0), B * 0.6],
+      [[], B * 0.5],
+      [cols([0, 1]), B * 0.5], [cols([2, 3]), B * 0.5], [cols([4, 5]), B * 0.5],
+      [range(12), B], [[], B * 0.6]
+    ];
+    for (var s = 0; s < steps.length; s++) {
+      hitSet(steps[s][0]);
+      await sleep(steps[s][1]);
+    }
+    hitSet([]);
+  }
+
+  if (document.readyState === 'complete') run();
+  else window.addEventListener('load', run);
+})();
+</script>
 
 </body>
 </html>
