@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Green Onions — Run to your beat.</title>
-<meta name="description" content="Green Onions tempo-matches the music you already own to your running cadence, in real time, without changing the pitch. Fully offline. No account, no subscription, nothing tracked.">
+<meta name="description" content="Land your feet on the beat every run — to the songs you already love. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Bring your own MP3s: it plays files on your phone, not Spotify or Apple Music streaming. Fully offline, nothing tracked.">
 
 <meta property="og:title" content="Green Onions — Run to your beat.">
-<meta property="og:description" content="Tempo-match your own music to your cadence. Pitch-preserved, fully offline, nothing tracked.">
+<meta property="og:description" content="Land your feet on the beat every run — to the songs you already love. Pitch-preserved, fully offline, nothing tracked.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://greenonions.app/">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,6 +26,7 @@
   --asphalt:#0E0F12;
   --ink:#F2F4F0;
   --muted:#9AA09B;
+  --slate:#7C828C;       /* Palette.slate — the app's secondary/label grey */
   --line:rgba(242,244,240,.10);
   --beat:.375s;          /* 160 bpm */
   --maxw:1080px;
@@ -110,8 +111,18 @@ header .wrap{display:flex;align-items:center}
 /* Hero is short now — headline, one line of promise, the ask, the screenshot —
    so it breathes rather than fighting to fit too much above the fold. */
 .hero{padding-top:clamp(24px,4vw,48px);position:relative}
-.hero h1{font-size:clamp(46px,8.2vw,80px);font-weight:700;margin:0 0 18px}
-.hero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--muted);max-width:52ch}
+/* The hero's kicker sits tight to the headline and stays grey — it's a lead-in
+   to the sentence below it, not a section label like the lime eyebrows further
+   down the page, and lime up here competed with the headline's own accent. */
+.hero .eyebrow{color:var(--muted);margin-bottom:10px}
+/* The headline is a full sentence now, not three words, so it's sized to sit
+   as a readable block of 3–4 lines rather than to fill the viewport. */
+.hero h1{font-size:clamp(32px,4.6vw,50px);font-weight:700;margin:0 0 20px;line-height:1.08}
+/* Second clause in lime — same ink/accent split the .big and .quote blocks
+   already use, and it keeps a long all-caps headline from reading as a wall. */
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero .lede{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:46ch}
+.hero .lede strong{color:var(--ink);font-weight:600}
 
 /* ---------- cta ---------- */
 .cta{
@@ -140,17 +151,6 @@ header .wrap{display:flex;align-items:center}
   font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
 .big em{font-style:normal;color:var(--lime)}
 
-/* ---------- features ---------- */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:2px;
-  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.card{background:var(--asphalt);padding:32px 28px}
-.card h3{font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:.06em}
-.card p{font-size:15.5px;color:var(--muted);margin:0}
-.card .num{
-  font-family:Oswald,sans-serif;font-weight:700;font-size:13px;color:var(--grass);
-  letter-spacing:.14em;display:block;margin-bottom:16px
-}
-
 /* ---------- quote ---------- */
 .quote{border-left:3px solid var(--lime);padding:6px 0 6px 28px;margin:0 0 22px;max-width:24ch}
 .quote p{
@@ -170,6 +170,66 @@ header .wrap{display:flex;align-items:center}
 }
 .quotecard .quote{border-left:0;padding:0;margin:0 0 10px;max-width:none}
 .quotecard .quote p{font-size:clamp(22px,3.2vw,30px)}
+
+/* ---------- playlist table ----------
+   The whole pitch as arithmetic: one target column that never changes,
+   a song-BPM column that's all over the place, and the rate that bridges
+   them. Numbers are the app's own — detected BPM rounded the way the app
+   rounds it, so target ÷ song reconciles against the rate on every row. */
+.playlist{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;
+  margin-top:clamp(34px,5vw,52px)}
+.playlist caption{
+  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.18em;
+  font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding-bottom:16px
+}
+.playlist th{
+  font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;
+  font-size:11px;font-weight:600;color:var(--muted);text-align:right;
+  padding:0 0 12px 20px;border-bottom:1px solid var(--line);white-space:nowrap
+}
+.playlist th:first-child{text-align:left;padding-left:0}
+.playlist td{padding:14px 0;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.playlist tr:last-child td{border-bottom:0}
+.playlist td:first-child{text-align:left;width:99%;white-space:normal}
+
+.trk{display:flex;align-items:center;gap:14px;min-width:0}
+.trk img{
+  width:44px;height:44px;flex:none;border-radius:3px;display:block;
+  background:#1a1c21;box-shadow:0 2px 10px -3px rgba(0,0,0,.7)
+}
+.trk .t{min-width:0}
+.trk .t b{display:block;font-size:15.5px;font-weight:600;line-height:1.3}
+.trk .t span{display:block;font-size:13.5px;color:var(--muted);line-height:1.35}
+
+/* Song BPM = the mess. Target = the constant. Rate = the bridge, so it's
+   the only number that gets the lime. */
+.playlist .n{font-family:Oswald,sans-serif;font-weight:600;font-size:19px;padding-left:20px}
+.playlist .n-target{color:var(--muted);font-weight:400}
+.playlist .n-rate{color:var(--lime);font-weight:700}
+/* Same size as the numeral, like the app's own "1.56×" readout. */
+.playlist .n small{font-size:.9em;font-weight:inherit;letter-spacing:0}
+
+/* Under 640px the three numeric columns won't sit beside a 44px thumbnail
+   without crushing the titles, so each row becomes a two-line block: track
+   up top, the three figures underneath with their labels restated. */
+@media (max-width:640px){
+  .playlist,.playlist tbody,.playlist tr,.playlist td{display:block;width:auto}
+  /* Once the table stops being a table, a table-caption shrink-wraps to its
+     narrowest word — it has to become a plain block to keep its line. */
+  .playlist caption{display:block}
+  .playlist thead{display:none}
+  .playlist tr{padding:16px 0;border-bottom:1px solid var(--line)}
+  .playlist tr:last-child{border-bottom:0}
+  .playlist td{border-bottom:0;padding:0;text-align:left;white-space:nowrap}
+  .playlist td:first-child{width:auto}
+  .playlist .n{display:inline-block;padding:12px 26px 0 0;font-size:18px}
+  .playlist .n::before{
+    content:attr(data-label);display:block;
+    font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;
+    font-size:10px;font-weight:600;color:var(--muted);margin-bottom:3px
+  }
+}
+.tablenote{font-size:14px;color:var(--muted);margin:22px 0 0;max-width:60ch}
 
 /* ---------- lockscreen ---------- */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,72px);align-items:center}
@@ -197,8 +257,49 @@ header .wrap{display:flex;align-items:center}
   background:radial-gradient(closest-side,rgba(214,238,58,.14),rgba(77,216,91,.08) 55%,transparent 75%);
   filter:blur(20px);
 }
-.herophone .screen{position:relative;border-radius:32px;overflow:hidden;background:var(--asphalt)}
+.herophone .screen{position:relative;border-radius:32px;overflow:hidden;background:var(--asphalt);
+  display:flex;flex-direction:column}
 .herophone .screen img{display:block;width:100%;height:auto}
+
+/* ---------- phone chrome ----------
+   The capture is app UI only (1206×2085, cropped, no system bars), so it read
+   as a cut-down phone rather than a screen. Status bar, Dynamic Island and
+   home indicator are drawn in CSS around it — they also add the vertical room
+   that brings the screen back toward a real handset's proportions. */
+.herophone .statusbar{
+  position:relative;flex:none;height:38px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 20px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.01em
+}
+.herophone .island{
+  position:absolute;left:50%;top:7px;transform:translateX(-50%);
+  width:74px;height:22px;border-radius:999px;background:#000
+}
+.herophone .sb-icons{display:flex;align-items:center;gap:5px}
+.herophone .sb-icons svg{display:block;fill:var(--ink)}
+/* The app's own tab bar — Now Playing / Library / About, the three tabs in
+   RootView.swift, selected tab tinted lime like the shipped tint. The capture
+   was cropped above it, so it's rebuilt here rather than re-shot. */
+.herophone .tabbar{
+  flex:none;display:flex;padding:9px 0 2px;
+  border-top:1px solid rgba(242,244,240,.07);
+  background:rgba(255,255,255,.022)
+}
+.herophone .tabbar a{
+  flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:3px;
+  text-decoration:none;color:var(--slate);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:9.5px;font-weight:500;letter-spacing:.01em
+}
+.herophone .tabbar a.on{color:var(--lime)}
+.herophone .tabbar svg{display:block;fill:currentColor}
+.herophone .homebar{
+  flex:none;height:26px;display:flex;align-items:center;justify-content:center
+}
+.herophone .homebar::after{
+  content:"";width:36%;height:4px;border-radius:999px;background:rgba(242,244,240,.9)
+}
 /* The "slight shine" — a soft diagonal highlight, like light on a screen protector. */
 .herophone .screen::after{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -211,17 +312,25 @@ header .wrap{display:flex;align-items:center}
   border:1px solid var(--line);border-radius:18px;padding:22px;
   background:rgba(255,255,255,.028);max-width:400px
 }
+/* Mirrors LockScreenPaceView (CadenceLiveActivity.swift) exactly: one row of
+   [− grass circle] [BPM label / number / track title] [+ lime-gradient circle],
+   centre column taking the remaining width. The number is chalk, not lime —
+   on the real card the accent is carried by the buttons. */
 .lockcard .row{display:flex;align-items:center;gap:16px}
-.lockcard .meta{flex:1;min-width:0}
-.lockcard .title{font-size:15px;font-weight:600;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lockcard .artist{font-size:13.5px;color:var(--muted);margin:0}
-.lockcard .bpm{
-  font-family:Oswald,sans-serif;font-weight:700;font-size:38px;line-height:1;color:var(--lime);
-  letter-spacing:.01em;font-variant-numeric:tabular-nums
+.lockcard .meta{flex:1;min-width:0;text-align:center}
+.lockcard .lbl{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:10.5px;font-weight:600;color:var(--slate);
+  letter-spacing:.18em;text-transform:uppercase;margin:0
 }
-.lockcard .bpm small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);
-  letter-spacing:.18em;text-transform:uppercase;margin-top:5px}
-.btns{display:flex;gap:11px}
+.lockcard .bpm{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:38px;line-height:1.06;
+  color:var(--ink);letter-spacing:.01em;font-variant-numeric:tabular-nums;margin:0
+}
+.lockcard .title{
+  font-size:13px;color:var(--slate);margin:2px 0 0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
 .btn{
   width:52px;height:52px;border-radius:50%;border:0;flex:none;cursor:pointer;
   font-family:Oswald,sans-serif;font-size:25px;font-weight:600;color:var(--asphalt);
@@ -233,14 +342,52 @@ header .wrap{display:flex;align-items:center}
 .btn.plus{background:linear-gradient(150deg,var(--lime),#c2dd28)}
 .hint{font-size:13.5px;color:var(--muted);margin:16px 0 0;text-align:center}
 
-/* ---------- who ---------- */
+/* ---------- callout: bring your own music ----------
+   The one thing that disqualifies most people, said before they get invested.
+   Boxed and set apart from the surrounding sections on purpose — this is a
+   notice, not a feature. The two columns are the whole message; the prose
+   above them is for anyone who wants the reason. */
+.callout{
+  border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.028);
+  padding:clamp(28px,4.5vw,44px) clamp(26px,4vw,44px)
+}
+.callout h2{font-size:clamp(26px,3.8vw,38px);margin-bottom:16px}
+.callout .lede{font-size:clamp(16px,1.9vw,19px);max-width:60ch;margin-bottom:clamp(26px,4vw,34px)}
+.yesno{display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+@media (max-width:620px){.yesno{grid-template-columns:1fr}}
+.yesno > div{background:var(--asphalt);padding:26px 24px}
+.yesno h3{
+  font-size:12px;font-weight:600;letter-spacing:.18em;margin-bottom:16px;
+  font-family:Oswald,sans-serif;text-transform:uppercase
+}
+.yesno .yes h3{color:var(--grass)}
+.yesno .no h3{color:var(--muted)}
+.yesno ul{list-style:none;margin:0;padding:0}
+.yesno li{font-size:15.5px;color:var(--muted);padding-left:26px;position:relative;margin-bottom:9px}
+.yesno li:last-child{margin-bottom:0}
+.yesno li::before{position:absolute;left:0;top:0;font-weight:700}
+.yesno .yes li::before{content:"✓";color:var(--grass)}
+.yesno .no li::before{content:"✕";color:#6d7278}
+/* The names people actually search for should survive a skim. */
+.yesno .no li b{color:var(--ink);font-weight:600}
+
+/* ---------- who ----------
+   Two numbers, stated as one person's settings rather than as a spec. The
+   BPM range is the biggest thing in each cell — it's the only part a reader
+   actually needs to take away. */
 .who{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
   border:1px solid var(--line);border-radius:4px;overflow:hidden}
 @media (max-width:620px){.who{grid-template-columns:1fr}}
-.who > div{background:var(--asphalt);padding:34px 30px}
-.who h3{font-size:21px;font-weight:600;margin-bottom:12px}
-.who .rng{font-family:Oswald,sans-serif;font-weight:700;color:var(--lime);font-size:14px;
-  letter-spacing:.1em;display:block;margin-bottom:14px}
+.who > div{background:var(--asphalt);padding:clamp(28px,4vw,38px) clamp(24px,3.4vw,34px)}
+.who .rng{
+  font-family:Oswald,sans-serif;font-weight:700;color:var(--lime);
+  font-size:clamp(34px,5vw,46px);line-height:1;letter-spacing:.01em;
+  display:block;margin-bottom:14px;font-variant-numeric:tabular-nums
+}
+.who .rng small{font-size:.4em;font-weight:600;letter-spacing:.16em;margin-left:6px;
+  color:var(--slate);vertical-align:.28em}
+.who h3{font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:.05em}
 .who p{font-size:15.5px;color:var(--muted);margin:0}
 
 /* ---------- footer ---------- */
@@ -271,12 +418,12 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   <div class="wrap">
     <div class="split">
       <div>
-        <h1>Match the beat to your feet.</h1>
+        <p class="eyebrow">Run to your beat</p>
+        <h1>Land your feet on the beat every run, <em>to the songs you already love.</em></h1>
 
         <p class="lede" style="margin-bottom:clamp(28px,4vw,36px)">
-          There's a feeling when your stride locks onto the beat exactly — every
-          step landing right on time. Now it happens on every run, with every
-          song you already own.
+          Set a target BPM. Every song on your playlist gets matched to that beat,
+          sped up to meet you, pitch intact. <strong>No chipmunks.</strong>
         </p>
 
         <!-- SWAP: public TestFlight invite link goes in this href. -->
@@ -286,24 +433,56 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
       <div class="herophone">
         <div class="screen">
+          <div class="statusbar" aria-hidden="true">
+            <span>9:41</span>
+            <span class="island"></span>
+            <span class="sb-icons">
+              <!-- cellular -->
+              <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.7" y="5.5" width="3" height="5.5" rx="1"/><rect x="9.4" y="3" width="3" height="8" rx="1"/><rect x="14.1" y="0" width="3" height="11" rx="1"/></svg>
+              <!-- wifi -->
+              <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 10.6 6.1 8.4a2.9 2.9 0 0 1 3.8 0zM4.6 6.6a5.3 5.3 0 0 1 6.8 0l1.3-1.5a7.3 7.3 0 0 0-9.4 0zM1.3 2.8a9.9 9.9 0 0 1 13.4 0L16 1.3a11.9 11.9 0 0 0-16 0z"/></svg>
+              <!-- battery -->
+              <svg width="25" height="11" viewBox="0 0 25 11"><rect x=".5" y=".5" width="21" height="10" rx="3" fill="none" stroke="currentColor" stroke-opacity=".4" style="stroke:var(--ink)"/><rect x="2" y="2" width="15" height="7" rx="1.8"/><path d="M23 4v3a2 2 0 0 0 0-3z"/></svg>
+            </span>
+          </div>
           <img src="img/nowplaying.png" loading="eager"
             alt="Green Onions Now Playing screen: target 155 BPM, song 100 BPM, playing at 1.56× to bridge them">
+          <div class="tabbar" aria-hidden="true">
+            <a class="on">
+              <!-- waveform -->
+              <svg width="21" height="17" viewBox="0 0 21 17"><rect x="0" y="7" width="1.8" height="3" rx=".9"/><rect x="3.8" y="4.5" width="1.8" height="8" rx=".9"/><rect x="7.6" y="1" width="1.8" height="15" rx=".9"/><rect x="11.4" y="5.5" width="1.8" height="6" rx=".9"/><rect x="15.2" y="2.5" width="1.8" height="12" rx=".9"/><rect x="19" y="6.5" width="1.8" height="4" rx=".9"/></svg>
+              Now Playing
+            </a>
+            <a>
+              <!-- music.note.list -->
+              <svg width="21" height="17" viewBox="0 0 21 17"><rect x="0" y="2" width="10" height="1.7" rx=".85"/><rect x="0" y="7.2" width="10" height="1.7" rx=".85"/><rect x="0" y="12.4" width="7" height="1.7" rx=".85"/><path d="M20 1.2v9.1a2.7 2.7 0 1 1-1.7-2.5V4L14 5v6.9a2.7 2.7 0 1 1-1.7-2.5V3.6z"/></svg>
+              Library
+            </a>
+            <a>
+              <!-- info.circle -->
+              <svg width="21" height="17" viewBox="0 0 21 17"><path d="M10.5 0a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17m0 1.7a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6"/><circle cx="10.5" cy="4.7" r="1.05"/><rect x="9.6" y="6.9" width="1.8" height="6" rx=".9"/></svg>
+              About
+            </a>
+          </div>
+          <div class="homebar" aria-hidden="true"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+
+
 <section>
   <div class="wrap">
     <div class="split">
       <div>
-        <p class="eyebrow">On your lock screen</p>
-        <h2>Turn it up a notch</h2>
+        <p class="eyebrow">Turn it up a notch</p>
+        <h2>Change it mid-run</h2>
         <p class="lede">
-          The target BPM control lives right on your lock screen. Reach down mid-run,
-          tap <strong style="color:var(--lime)">+</strong>, and the tempo climbs to meet
-          you — no unlocking your phone, no fumbling, no stopping.
+          The target BPM lives right on your lock screen. Tap
+          <strong style="color:var(--lime)">+</strong> and the whole playlist climbs to
+          meet you — no unlocking, no fumbling, no stopping.
         </p>
         <p class="muted" style="font-size:15px">
           A Live Activity, also available in the Dynamic Island.
@@ -312,57 +491,16 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <div>
         <div class="lockcard">
           <div class="row">
-            <div class="bpm">168<small>Target BPM</small></div>
+            <button class="btn minus" type="button" aria-label="Decrease tempo">&minus;</button>
             <div class="meta">
-              <p class="title">Harvest Moon</p>
-              <p class="artist">Neil Young</p>
+              <p class="lbl">BPM</p>
+              <p class="bpm">160</p>
+              <p class="title">Four Strong Winds</p>
             </div>
-            <div class="btns">
-              <button class="btn minus" type="button" aria-label="Decrease tempo">&minus;</button>
-              <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
-            </div>
+            <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
           </div>
         </div>
         <p class="hint">Illustration of the lock-screen controls</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <p class="eyebrow">What you get</p>
-    <h2>Built for one job</h2>
-    <div class="grid">
-      <div class="card">
-        <span class="num">01</span>
-        <h3>Your own music</h3>
-        <p>Plays the files and iTunes purchases already on your phone. No catalog to browse, no licensing gaps, no "this song isn't available."</p>
-      </div>
-      <div class="card">
-        <span class="num">02</span>
-        <h3>Pitch-preserved stretch</h3>
-        <p>Real-time time-stretching that holds the original key. Songs speed up to your cadence without turning into chipmunks.</p>
-      </div>
-      <div class="card">
-        <span class="num">03</span>
-        <h3>Lock-screen control</h3>
-        <p>Nudge your target tempo up or down mid-run without unlocking your phone or breaking stride.</p>
-      </div>
-      <div class="card">
-        <span class="num">04</span>
-        <h3>Works anywhere</h3>
-        <p>Fully offline. No signal, no problem — trails, tunnels, treadmills, airplane mode. Everything runs on the device.</p>
-      </div>
-      <div class="card">
-        <span class="num">05</span>
-        <h3>No account, ever</h3>
-        <p>No sign-up, no subscription, no ads. You don't make an account because there's nothing to make an account for.</p>
-      </div>
-      <div class="card">
-        <span class="num">06</span>
-        <h3>Nothing tracked</h3>
-        <p>No analytics, no telemetry, no profile. Your library and your runs stay on your phone.</p>
       </div>
     </div>
   </div>
@@ -377,6 +515,92 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       a genre you tolerate and starts being the music you actually love. Records that were never
       remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
     </p>
+    <table class="playlist">
+      <caption>Six songs, one 160 BPM target</caption>
+      <thead>
+        <tr>
+          <th scope="col">Song</th>
+          <th scope="col">Song BPM</th>
+          <th scope="col">Target</th>
+          <th scope="col">Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/greenonions.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>Green Onions</b><span>Booker T. &amp; the M.G.'s</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">137</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.17<small>×</small></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/decade.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>A Decade Under the Influence</b><span>Taking Back Sunday</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">156</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.03<small>×</small></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/dreams.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>Dreams</b><span>The Cranberries</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">129</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.24<small>×</small></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/stuck.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>Stuck in the Middle with You</b><span>Stealers Wheel</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">124</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.29<small>×</small></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/centerfold.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>Centerfold</b><span>The J. Geils Band</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">114</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.40<small>×</small></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="trk">
+              <img src="img/art/fourstrongwinds.jpg" alt="" width="44" height="44" loading="lazy">
+              <div class="t"><b>Four Strong Winds</b><span>Neil Young</span></div>
+            </div>
+          </td>
+          <td class="n" data-label="Song BPM">108</td>
+          <td class="n n-target" data-label="Target">160</td>
+          <td class="n n-rate" data-label="Rate">1.48<small>×</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="tablenote">
+      Six songs recorded decades apart, one beat under your feet. The target column
+      never moves — the app works out the rest. These BPMs are the app's own,
+      measured from a real playlist.
+    </p>
+
     <div class="quotecard">
       <blockquote class="quote">
         <p>I never knew I could run to <em>Neil Young</em>.</p>
@@ -388,21 +612,56 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">Who it's for</p>
-    <h2>Anyone keeping time</h2>
+    <div class="callout">
+      <p class="eyebrow">One catch</p>
+      <h2>Bring your own music</h2>
+      <p class="lede">
+        Green Onions plays audio files that live on your phone. It <strong
+        style="color:var(--ink);font-weight:600">cannot</strong> play a streaming
+        subscription — those downloads are encrypted, and no third-party app is
+        allowed to open them. If everything you listen to is a subscription, this
+        app will have nothing to play.
+      </p>
+      <div class="yesno">
+        <div class="yes">
+          <h3>Works</h3>
+          <ul>
+            <li>MP3 and M4A files you own</li>
+            <li>iTunes Store purchases</li>
+            <li>Anything you can drop into the Files app</li>
+          </ul>
+        </div>
+        <div class="no">
+          <h3>Doesn't work</h3>
+          <ul>
+            <li><b>Spotify</b> — any tier, including Premium</li>
+            <li><b>Apple Music</b> subscription downloads</li>
+            <li><b>YouTube Music</b>, Amazon Music, Tidal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Anyone keeping time</p>
+    <h2>Who it's for</h2>
+    <p class="lede" style="max-width:52ch">
+      Runners and jump ropers. I can only tell you where I set mine — start near it
+      and nudge from there.
+    </p>
     <div class="who">
       <div>
-        <span class="rng">150 – 180 SPM</span>
+        <span class="rng">150–160<small>BPM</small></span>
         <h3>Runners</h3>
-        <p>Hold a steady cadence instead of drifting with whatever song shuffles up. Dial in a target,
-        nudge it as you go, and let the music do the metronome work. Cadence is a rhythm you can hold
-        at any pace — that's exactly why matching it works.</p>
+        <p>Where my feet land at an 8:30–9:00 mile.</p>
       </div>
       <div>
-        <span class="rng">120 – 180+ SPM</span>
-        <h3>Jump rope</h3>
-        <p>Steady rounds at a moderate tempo, or speed work up top. Set the beat, keep the rhythm,
-        stop counting in your head.</p>
+        <span class="rng">140–150<small>BPM</small></span>
+        <h3>Jump ropers</h3>
+        <p>Where the rope comes round when I'm skipping.</p>
       </div>
     </div>
   </div>
