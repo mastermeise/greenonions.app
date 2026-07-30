@@ -833,6 +833,13 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 // Nothing here is load-bearing: the .reveal class is only ever ADDED by this
 // script, and the CSS that hides it is gated on html.js, so if any of this
 // throws, the page is simply static.
+//
+// ⚠️ The one way this CAN go wrong is the observer never firing at all — which
+// leaves every armed element at opacity 0 forever, i.e. a blank page. That is
+// not hypothetical: a 0x0 viewport (prerender, restored background tab, and
+// notably headless screenshot / link-preview crawlers) produces exactly that.
+// The safety net at the bottom of this IIFE is what makes the failure mode
+// "no animation" instead of "no content". Do not remove it.
 // ---------------------------------------------------------------------------
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -891,6 +898,28 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
     arm(rest, 55, 5);   // cap at 5 → never more than 275ms of lead-in
     arm(rows, 45, 8);
+  });
+
+  // Safety net — see the warning at the top of this IIFE.
+  //
+  // Something is ALWAYS in the viewport on load, so in normal operation the
+  // hero has revealed long before this fires and the guard is a no-op. If
+  // nothing at all has revealed after 2s the observer is not working (0x0
+  // viewport, prerender, headless crawler), so show everything immediately
+  // rather than serve a blank page. Delays are zeroed so it resolves at once
+  // instead of running a staggered entrance nobody is watching.
+  function rescue() {
+    if (document.querySelector('.reveal.in')) return;   // observer is fine
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) {
+      el.style.transitionDelay = '0ms';
+      el.classList.add('in');
+    });
+  }
+  setTimeout(rescue, 2000);
+  // A tab that gets a real viewport later (background → foreground) should be
+  // re-checked rather than left waiting on the one-shot timer above.
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') setTimeout(rescue, 300);
   });
 })();
 
