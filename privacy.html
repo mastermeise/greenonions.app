@@ -38,8 +38,12 @@ li{margin-bottom:12px}
   line-height:1.2;margin:0;color:var(--ink)}
 .callout strong{font-weight:600;color:var(--lime)}
 ul{padding-left:20px;margin:0 0 16px}
-a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(225,246,0,.35)}
+a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(225,246,0,.35);
+  transition:border-color .2s ease}
 a:hover{border-color:var(--lime)}
+/* No reveal-on-scroll here on purpose — this is a legal document, and content
+   that fades in as you read it is friction, not polish. Link hover only. */
+@media (prefers-reduced-motion:reduce){a{transition:none}}
 footer{border-top:1px solid var(--line);padding:34px 0 60px;font-size:14px;color:var(--muted)}
 footer a{color:var(--muted);border-bottom:1px solid var(--line)}
 footer a:hover{color:var(--lime);border-color:var(--lime)}

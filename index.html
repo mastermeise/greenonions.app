@@ -22,6 +22,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Marks the document as scripted BEFORE first paint, so the reveal-on-scroll
+     rules can hide content without ever hiding it from a reader whose JS failed
+     or is disabled. Everything in the MOTION block is gated on .js for that
+     reason — don't move this below the stylesheet or content will flash. -->
+<script>document.documentElement.className += ' js';</script>
+
 <style>
 :root{
   /* The app icon's greens — site, app (Theme.swift) and icon all share these. */
@@ -400,6 +406,78 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-con
 footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
 footer a:hover{color:var(--lime);border-color:var(--lime)}
 footer nav{display:flex;gap:22px;flex-wrap:wrap}
+
+/* ============================================================================
+   MOTION
+   All of the page's non-brandmark movement lives here, in one block, so it can
+   be tuned or lifted out without hunting through the stylesheet.
+
+   House rules, deliberately conservative:
+   · Nothing moves more than ~14px or lasts longer than ~.55s.
+   · Only opacity and transform are animated — both composite on the GPU, so
+     none of this can cause layout thrash on a phone.
+   · Nothing loops. Every reveal fires ONCE and is then unobserved; a page that
+     keeps twitching as you scroll reads as a template, not a product.
+   · Every rule here is gated on html.js (see the head script) so a no-JS
+     reader gets the full page, just static.
+   · The whole block collapses under prefers-reduced-motion at the bottom.
+   ========================================================================= */
+
+/* ---- reveal on scroll ----
+   The resting state is "already arrived"; .reveal only takes it away, and JS
+   puts it back with .in. --d is the per-element stagger, set in JS. */
+.js .reveal{opacity:0;transform:translateY(14px)}
+.js .reveal.in{
+  opacity:1;transform:none;
+  transition:opacity .5s ease,transform .55s cubic-bezier(.22,.61,.36,1);
+  transition-delay:var(--d,0ms)
+}
+/* Table rows can't take a transform in every engine as reliably as a block can,
+   and a 6-row stagger is the one place the beat metaphor earns its keep: the
+   rows arrive in time rather than all at once. Shorter travel so it reads as a
+   roll-in, not six separate entrances. */
+.js .playlist tbody tr.reveal{transform:translateY(9px)}
+
+/* ---- hover / press polish ----
+   Pointer-only. `hover:hover` keeps every one of these off touch devices,
+   where :hover sticks after a tap and leaves a row looking selected. */
+@media (hover:hover){
+  .cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .playlist tbody tr{transition:background .22s ease}
+  .playlist tbody tr:hover{background:rgba(255,255,255,.025)}
+  .playlist tbody tr:hover .trk img{transform:scale(1.05)}
+  .who > div,.yesno > div{transition:background .25s ease}
+  .who > div:hover,.yesno > div:hover{background:#131519}
+  .btn:hover{filter:brightness(1.1)}
+  footer a{transition:color .2s ease,border-color .2s ease}
+}
+.trk img{transition:transform .3s cubic-bezier(.22,.61,.36,1)}
+/* The CTA already had a .12s transform/filter transition; this just gives the
+   lift something to travel on and a faint lime bloom to land in. */
+.cta{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.cta:hover{box-shadow:0 6px 22px -8px rgba(225,246,0,.5)}
+.cta:active{transform:scale(.97);box-shadow:none}
+
+/* ---- lock-screen illustration ----
+   The − / + are real buttons that used to do nothing. They now drive the
+   number, so the "tap + and the playlist climbs" claim in the copy beside them
+   is something you can try rather than just read. .tick is a single-frame
+   nudge in the direction you pressed — the app's own numericText roll, as
+   close as CSS gets. */
+.lockcard .bpm{transition:transform .18s cubic-bezier(.22,.61,.36,1)}
+.lockcard .bpm.tick-up{transform:translateY(-4px)}
+.lockcard .bpm.tick-down{transform:translateY(4px)}
+
+/* ---- reduced motion ----
+   Not "less motion" — none. Reveals resolve to their resting state instantly
+   and the colour/background hovers stay, since those don't move anything. */
+@media (prefers-reduced-motion:reduce){
+  .js .reveal,.js .reveal.in{opacity:1;transform:none;transition:none}
+  .cta,.trk img,.lockcard .bpm,.playlist tbody tr{transition:none}
+  .cta:hover{transform:none}
+  .playlist tbody tr:hover .trk img{transform:none}
+  .lockcard .bpm.tick-up,.lockcard .bpm.tick-down{transform:none}
+}
 </style>
 </head>
 <body>
@@ -506,7 +584,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
             <button class="btn plus" type="button" aria-label="Increase tempo">+</button>
           </div>
         </div>
-        <p class="hint">Illustration of the lock-screen controls</p>
+        <p class="hint">Illustration of the lock-screen controls &mdash; try it</p>
       </div>
     </div>
   </div>
@@ -743,6 +821,123 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
   if (document.readyState === 'complete') run();
   else window.addEventListener('load', run);
+})();
+
+// ---------------------------------------------------------------------------
+// Reveal on scroll.
+//
+// Elements fade up 14px as they enter, once each, then are unobserved — the
+// page settles and stays settled. Blocks are collected per section so the
+// stagger restarts down the page instead of accumulating into a long delay.
+//
+// Nothing here is load-bearing: the .reveal class is only ever ADDED by this
+// script, and the CSS that hides it is gated on html.js, so if any of this
+// throws, the page is simply static.
+// ---------------------------------------------------------------------------
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  // What moves. Deliberately coarse — .callout and .quotecard reveal as whole
+  // cards rather than line by line, because they read as single objects.
+  var SEL = [
+    '.hero .eyebrow', '.hero h1', '.hero .lede', '.cta', '.ctasub', '.herophone',
+    'section > .wrap > .eyebrow', 'section > .wrap > h2', 'section > .wrap > .lede',
+    '.split > div > .eyebrow', '.split > div > h2', '.split > div > .lede', '.split > div > .muted',
+    '.lockcard', '.hint',
+    '.playlist caption', '.playlist thead', '.playlist tbody tr',
+    '.tablenote', '.quotecard', '.callout', '.who > div'
+  ].join(',');
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io.unobserve(e.target);          // once only
+    });
+  }, {
+    // Fire a little before the element is fully in view, so the motion is
+    // finishing as the reader's eye arrives rather than starting under it.
+    rootMargin: '0px 0px -8% 0px',
+    threshold: 0
+  });
+
+  function arm(els, step, cap) {
+    els.forEach(function (el, i) {
+      el.style.setProperty('--d', Math.min(i, cap) * step + 'ms');
+      el.classList.add('reveal');
+      io.observe(el);
+    });
+  }
+
+  // Group by section so delays restart; within a group, skip any element that
+  // sits inside another element already revealing (a card and its contents
+  // must not both animate — you'd see the inner one fade twice).
+  var groups = document.querySelectorAll('header, section, footer');
+  Array.prototype.forEach.call(groups, function (sec) {
+    var found = Array.prototype.slice.call(sec.querySelectorAll(SEL));
+    var kept = [];
+    found.forEach(function (el) {
+      for (var p = el.parentNode; p && p !== sec; p = p.parentNode) {
+        if (kept.indexOf(p) !== -1) return;
+      }
+      kept.push(el);
+    });
+
+    // Table rows get their own tighter sequence — six rows arriving in time is
+    // the one place a stagger says something about the product.
+    var rows = kept.filter(function (el) { return el.tagName === 'TR'; });
+    var rest = kept.filter(function (el) { return el.tagName !== 'TR'; });
+
+    arm(rest, 55, 5);   // cap at 5 → never more than 275ms of lead-in
+    arm(rows, 45, 8);
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Lock-screen illustration — make the − / + real.
+//
+// The copy right beside this card says "tap + and the whole playlist climbs to
+// meet you". The buttons were inert, which made the one interactive-looking
+// thing on the page a dead end. They now drive the number, mirroring
+// PlayerEngine.nudgePace(): 1 BPM for the first few taps, 2, then 5 under
+// sustained pressing, clamped to the app's real 120–200 range.
+// ---------------------------------------------------------------------------
+(function () {
+  var card = document.querySelector('.lockcard');
+  if (!card) return;
+  var out = card.querySelector('.bpm');
+  var minus = card.querySelector('.btn.minus');
+  var plus = card.querySelector('.btn.plus');
+  if (!out || !minus || !plus) return;
+
+  var MIN = 120, MAX = 200;
+  var bpm = parseInt(out.textContent, 10) || 160;
+  var streak = 0, lastAt = 0, clearTick;
+
+  function nudge(dir) {
+    var now = Date.now();
+    streak = (now - lastAt < 600) ? streak + 1 : 0;
+    lastAt = now;
+
+    var step = streak < 3 ? 1 : (streak < 6 ? 2 : 5);
+    var next = Math.max(MIN, Math.min(MAX, bpm + dir * step));
+    if (next === bpm) return;          // at a rail — don't fake movement
+    bpm = next;
+    out.textContent = bpm;
+
+    // Single-frame nudge in the pressed direction, then release.
+    out.classList.remove('tick-up', 'tick-down');
+    void out.offsetWidth;              // restart the transition
+    out.classList.add(dir > 0 ? 'tick-up' : 'tick-down');
+    clearTimeout(clearTick);
+    clearTick = setTimeout(function () {
+      out.classList.remove('tick-up', 'tick-down');
+    }, 180);
+  }
+
+  minus.addEventListener('click', function () { nudge(-1); });
+  plus.addEventListener('click', function () { nudge(1); });
 })();
 </script>
 
