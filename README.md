@@ -17,7 +17,8 @@ Static site, hosted on GitHub Pages at <https://greenonions.app>.
 
 Kept in sync with `Shared/Theme.swift` in the app repo:
 
-- grass `#4DD85B` · lime `#D6EE3A` · asphalt `#0E0F12`
+- grass `#00E74D` · lime `#E1F600` · asphalt `#0E0F12` — these are the app icon's
+  greens (`design/icon/GO-appicon.svg`); site, app, and icon share one palette.
 - Display type: Oswald (SIL OFL). Body: system font.
 - The checkerboard is a beat sequencer — cells flip grass→lime on the beat. The hero grid
   animates at 160 BPM (`--beat: .375s`).

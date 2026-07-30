@@ -24,8 +24,9 @@
 
 <style>
 :root{
-  --grass:#4DD85B;
-  --lime:#D6EE3A;
+  /* The app icon's greens — site, app (Theme.swift) and icon all share these. */
+  --grass:#00E74D;
+  --lime:#E1F600;
   --asphalt:#0E0F12;
   --ink:#F2F4F0;
   --muted:#9AA09B;
@@ -257,7 +258,7 @@ header .wrap{display:flex;align-items:center}
    a plain drop shadow disappears against asphalt-on-asphalt. */
 .herophone::before{
   content:"";position:absolute;inset:-15%;z-index:-1;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(214,238,58,.14),rgba(77,216,91,.08) 55%,transparent 75%);
+  background:radial-gradient(closest-side,rgba(225,246,0,.14),rgba(0,231,77,.08) 55%,transparent 75%);
   filter:blur(20px);
 }
 .herophone .screen{position:relative;border-radius:32px;overflow:hidden;background:var(--asphalt);
@@ -342,7 +343,7 @@ header .wrap{display:flex;align-items:center}
 }
 .btn:active{transform:scale(.92)}
 .btn.minus{background:var(--grass)}
-.btn.plus{background:linear-gradient(150deg,var(--lime),#c2dd28)}
+.btn.plus{background:linear-gradient(150deg,var(--lime),#CEE100)} /* dark stop = Palette.limeGradient's */
 .hint{font-size:13.5px;color:var(--muted);margin:16px 0 0;text-align:center}
 
 /* ---------- callout: bring your own music ----------
