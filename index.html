@@ -551,6 +551,19 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
              Builds expire after 90 days; if this 404s, the current build has
              lapsed and a new one needs uploading, not a new link. -->
         <a class="cta" href="https://testflight.apple.com/join/2DVpM272">Join the TestFlight beta</a>
+
+        <!-- ▼ LAUNCH DAY: delete the TestFlight anchor above, uncomment this one.
+             Fill in pt= with the provider token — it's embedded in any campaign
+             link generated at App Store Connect → Analytics → Acquisition →
+             Campaigns, so mint one campaign and read it off that.
+             ct=website is the baked-in default; the ?s= handler at the bottom of
+             this file overrides it per channel (greenonions.app/?s=strava → ct=strava).
+             data-store-link is what that handler looks for — keep the attribute. -->
+        <!--
+        <a class="cta" data-store-link
+           href="https://apps.apple.com/app/apple-store/id6793750166?pt=PROVIDER_TOKEN&amp;ct=website&amp;mt=8">Get it on the App Store</a>
+        -->
+
         <p class="ctasub">Free · iPhone · no account, no subscription</p>
         <!-- The disqualifier, stated on the first screen rather than four
              sections down. Most people read "songs you already love" as their
@@ -1044,6 +1057,48 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   plus.addEventListener('click', function () { nudge(1); });
 })();
 </script>
+
+<script>
+// Per-channel App Store attribution.
+//
+// Apple ignores utm_* entirely — it reads its own pt/ct/mt tokens, and a campaign
+// link is far too long and ugly to post anywhere a human has to read it. So we
+// hand out short greenonions.app/?s=<channel> URLs and rewrite the store button's
+// campaign token here. Web analytics then gives the denominator (visits) that
+// App Store Connect can't see, and Apple's per-campaign product-page views give
+// the numerator. Divide → per-channel conversion, with no click tracking.
+//
+// The default campaign is already baked into the href, so with JS off, a mangled
+// param, or this script failing outright, the link is still a valid attributed
+// App Store link. This can only ever change WHICH campaign, never break the link.
+(function () {
+  var DEFAULT_CAMPAIGN = 'website';
+
+  var raw = new URLSearchParams(window.location.search).get('s') || '';
+  // Apple's campaign tokens are a restricted set. Anything outside it is junk or
+  // someone poking at the query string — fall back rather than mint a garbage
+  // campaign that then pollutes the reporting.
+  var campaign = /^[a-z0-9-]{1,30}$/.test(raw.toLowerCase())
+    ? raw.toLowerCase()
+    : DEFAULT_CAMPAIGN;
+
+  var links = document.querySelectorAll('a[data-store-link]');
+  for (var i = 0; i < links.length; i++) {
+    try {
+      var u = new URL(links[i].href);
+      u.searchParams.set('ct', campaign);
+      links[i].href = u.toString();
+    } catch (e) {
+      /* Leave the href exactly as authored. */
+    }
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics — cookieless page-view counting, no identifiers, no cross-site
+     tracking. Disclosed in the "This website" section of /privacy.html; if this ever comes
+     out, that section comes out with it. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4e5a87768264445486ea9fc0c1e70b59"}'></script>
 
 </body>
 </html>

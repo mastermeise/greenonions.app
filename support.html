@@ -199,8 +199,10 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>Privacy</h2>
     <p>
-      Green Onions collects nothing at all — no accounts, no analytics, no network connections of
-      any kind. The full policy is at <a href="/privacy.html">greenonions.app/privacy.html</a>.
+      The app collects nothing at all — no accounts, no analytics, no network connections of any
+      kind. (This website is a separate thing, and it does use privacy-preserving visit counting —
+      that's covered in the policy.) The full policy is at
+      <a href="/privacy.html">greenonions.app/privacy.html</a>.
     </p>
   </div>
 </main>
@@ -211,6 +213,11 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <a href="/privacy.html">Privacy</a>
   </div>
 </footer>
+
+<!-- Cloudflare Web Analytics — cookieless page-view counting, no identifiers, no cross-site
+     tracking. Disclosed in the "This website" section of /privacy.html; if this ever comes
+     out, that section comes out with it. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4e5a87768264445486ea9fc0c1e70b59"}'></script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Green Onions</title>
-<meta name="description" content="Green Onions does not collect, transmit, or share any of your data. No accounts, no analytics, no advertising, no third-party services.">
+<meta name="description" content="The Green Onions app does not collect, transmit, or share any of your data. No accounts, no analytics, no advertising, no tracking.">
 <meta name="theme-color" content="#0E0F12">
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
@@ -61,15 +61,17 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective date: July 22, 2026</p>
+    <p class="updated">Effective date: July 31, 2026</p>
 
     <h2>The short version</h2>
     <div class="callout">
       <p><strong>Green Onions does not collect, transmit, or share any of your data.</strong></p>
     </div>
     <p>
-      There are no accounts, no sign-in, no analytics, no advertising, and no third-party services.
-      Everything the app stores stays on your device. That's the whole policy — the rest is just detail.
+      There are no accounts, no sign-in, no analytics, no advertising, and no third-party services
+      in the app. Everything the app stores stays on your device. That's the whole policy — the rest
+      is just detail. (This website is a separate thing from the app; it's covered
+      <a href="#website">at the bottom</a>.)
     </p>
 
     <h2>What the app accesses on your device</h2>
@@ -103,8 +105,9 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>Third parties</h2>
     <p>
-      Green Onions includes no third-party analytics, advertising, tracking, or software development
-      kits. No data is shared with anyone because no data is collected.
+      <strong>The app</strong> includes no third-party analytics, advertising, tracking, or software
+      development kits. No data is shared with anyone, because no data is collected. <strong>This
+      website</strong> is a different matter, and it's described <a href="#website">below</a>.
     </p>
 
     <h2>Children</h2>
@@ -128,6 +131,28 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       The app itself receives none of it.
     </p>
 
+    <!-- SITE-SCOPE ONLY. This section deliberately does NOT exist in CadencePlayer/PRIVACY.md,
+         which is canonical for the APP. The app and this website are different things with
+         different answers; that divergence is intentional, not drift. Don't "sync" it away. -->
+    <h2 id="website">This website</h2>
+    <p>
+      greenonions.app is separate from the app, and unlike the app it does rely on two outside
+      services. Neither one has any connection to the app, and neither can see anything about your
+      music.
+    </p>
+    <ul>
+      <li><strong>Cloudflare Web Analytics</strong> counts page visits, so I can tell whether anyone
+      is finding this site. It sets no cookies, stores no identifiers, and doesn't follow you to any
+      other website. It can't identify you.</li>
+      <li><strong>Google Fonts</strong> serves the typeface these pages are set in. Your browser
+      requests that font file from Google, which sees your IP address — the same as it would for any
+      font or image hosted elsewhere.</li>
+    </ul>
+    <p>
+      There is no advertising here, no tracking pixels, and nothing that follows you off this site.
+      The site is hosted on GitHub Pages, which keeps its own standard server logs.
+    </p>
+
     <h2>Changes to this policy</h2>
     <p>
       If this policy ever changes, the updated version will be posted here with a new effective date,
@@ -148,6 +173,11 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <a href="/">← Back to Green Onions</a>
   </div>
 </footer>
+
+<!-- Cloudflare Web Analytics — cookieless page-view counting, no identifiers, no cross-site
+     tracking. Disclosed in the "This website" section above; if this ever comes out, that
+     section comes out with it. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4e5a87768264445486ea9fc0c1e70b59"}'></script>
 
 </body>
 </html>
