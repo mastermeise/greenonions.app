@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — Green Onions</title>
+<meta name="description" content="Help and answers for Green Onions, the cadence-matched music player for runners. How to add music, fix a wrong BPM, and what the app can and can't play.">
+<meta name="theme-color" content="#0E0F12">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/img/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Same shell as privacy.html on purpose — these two are the plain-document
+   pages, and they should be indistinguishable from each other in voice and
+   layout. Only the .contact block below is new. */
+:root{--grass:#00E74D;--lime:#E1F600;--asphalt:#0E0F12;--ink:#F2F4F0;--muted:#9AA09B;--line:rgba(242,244,240,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--asphalt);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:0 24px}
+header{padding:26px 0}
+header .wrap{display:flex;align-items:center;gap:12px}
+.mark{width:24px;height:24px;border-radius:5.5px;display:block}
+.mark-name{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600;
+  color:var(--ink);text-decoration:none}
+main{padding:36px 0 80px}
+h1{font-family:Oswald,sans-serif;text-transform:uppercase;font-size:clamp(34px,7vw,58px);
+  font-weight:700;line-height:1.02;margin:0 0 10px;letter-spacing:.01em}
+h2{font-family:Oswald,sans-serif;text-transform:uppercase;font-size:20px;font-weight:600;
+  letter-spacing:.06em;margin:44px 0 12px;color:var(--lime)}
+h3{font-size:17.5px;font-weight:600;margin:30px 0 6px;letter-spacing:.01em}
+p,li{color:#D8DCD6;margin:0 0 16px}
+li{margin-bottom:10px}
+.updated{color:var(--muted);font-size:14.5px;margin-bottom:36px}
+ul,ol{padding-left:20px;margin:0 0 16px}
+a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(225,246,0,.35);
+  transition:border-color .2s ease}
+a:hover{border-color:var(--lime)}
+/* The whole reason this page exists is that the App Store support URL has to
+   land somewhere a person can actually get help — so the address is the first
+   thing on the page, not a footnote at the bottom. */
+.contact{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.028);
+  padding:24px 26px;margin:0 0 12px}
+.contact .lbl{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.18em;
+  font-size:11px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.contact .addr{font-family:Oswald,sans-serif;font-size:clamp(19px,3.2vw,25px);font-weight:600;
+  letter-spacing:.01em;margin:0}
+.contact p:last-child{margin-bottom:0}
+.note{font-size:15px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){a{transition:none}}
+footer{border-top:1px solid var(--line);padding:34px 0 60px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:22px}
+footer a{color:var(--muted);border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--lime);border-color:var(--lime)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img class="mark" src="/img/favicon.svg" alt="" aria-hidden="true" width="24" height="24">
+    <a class="mark-name" href="/">Green Onions</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Support</h1>
+    <p class="updated">Green Onions for iPhone · version 1.0</p>
+
+    <div class="contact">
+      <p class="lbl">Email</p>
+      <p class="addr"><a href="mailto:greenonionsapp@gmail.com">greenonionsapp@gmail.com</a></p>
+      <p class="note" style="margin-top:12px">
+        One person reads this, so please be patient — but every message gets an answer.
+        Bug reports are genuinely welcome. Your iPhone model and iOS version help a lot.
+      </p>
+    </div>
+    <p class="note">
+      You can also reach the same address from inside the app: <strong>About → Send feedback</strong>.
+    </p>
+
+    <h2>Getting started</h2>
+
+    <h3>How do I add music?</h3>
+    <p>Two ways, both on the <strong>Library</strong> tab:</p>
+    <ul>
+      <li><strong>Add from Files</strong> — pick MP3 or M4A files from the Files app, iCloud Drive,
+      or anywhere else that shows up in the file picker.</li>
+      <li><strong>From Music Library</strong> — pick songs already on your phone. This only sees
+      music you own; see the next question.</li>
+    </ul>
+    <p>
+      Green Onions analyzes each song as it comes in and works out its BPM. That takes a few
+      seconds per track, and it only happens once.
+    </p>
+
+    <h3>Why is my library empty when I open the app?</h3>
+    <p>
+      Because Green Onions doesn't come with music — it plays yours. One demo track is included
+      so you can hear what tempo matching sounds like before you add anything. Everything else
+      you bring in yourself.
+    </p>
+
+    <h3>How do I know what BPM to set?</h3>
+    <p>
+      Green Onions does not measure your cadence — you tell it the number you want. If you don't
+      know yours, count how many times your right foot lands in 30 seconds and multiply by four.
+      Most recreational runners come out between 150 and 170. If you'd rather just start
+      somewhere, set 160 and adjust by feel on the run.
+    </p>
+
+    <h2>What it can and can't play</h2>
+
+    <h3>Does it work with Spotify?</h3>
+    <p>
+      No — not on any tier, including Premium. Spotify's downloads are encrypted and can only be
+      opened by Spotify's own app. No third-party player can reach them.
+    </p>
+
+    <h3>Does it work with Apple Music?</h3>
+    <p>
+      Partly. <strong>Songs you bought</strong> from the iTunes Store work. <strong>Apple Music
+      subscription downloads do not</strong> — those are DRM-protected in the same way Spotify's
+      are. If your whole library is a subscription, Green Onions will have nothing to play.
+    </p>
+
+    <h3>What file types work?</h3>
+    <p>MP3 and M4A (AAC) files that live on your phone, plus iTunes Store purchases.</p>
+
+    <h3>Does it change or delete my original files?</h3>
+    <p>
+      No. Adding a song copies it into the app's own storage. The original stays exactly where
+      it was, untouched. Deleting a song from the Green Onions library removes only that copy.
+    </p>
+
+    <h2>Playback and BPM</h2>
+
+    <h3>A song's BPM was detected wrong. How do I fix it?</h3>
+    <p>
+      Tap the BPM shown next to any song in your Library. That opens an editor where you can:
+    </p>
+    <ul>
+      <li><strong>Tap the beat</strong> along with the song to set it by feel.</li>
+      <li><strong>Halve or double it</strong> with ÷2 and ×2 — this is the fix for the most common
+      detection mistake, where a song is read at half or twice its real tempo.</li>
+      <li><strong>Type a number</strong> in directly.</li>
+      <li><strong>Revert to detected</strong> if you want the app's own answer back.</li>
+    </ul>
+    <p>
+      A BPM you set by hand is kept — automatic detection won't overwrite it later.
+    </p>
+
+    <h3>Why does a song sound wrong at my cadence?</h3>
+    <p>
+      Almost always a wrong BPM rather than a stretching problem — fix it with the editor above.
+      Songs that need a very large speed-up are also the most likely to sound strange; the pitch
+      is preserved either way, but a track running far above its original tempo can feel
+      unnatural regardless.
+    </p>
+
+    <h3>Can I use it alongside my run tracker?</h3>
+    <p>
+      Yes. Green Onions is only a music player — it doesn't use GPS or read any health data, so
+      Strava, Nike Run Club, the Workout app and anything similar keep running normally beside it.
+    </p>
+
+    <h3>Does it work offline?</h3>
+    <p>
+      Entirely. Green Onions makes no network connections at all, so it works in airplane mode,
+      in a dead zone, and on a phone with no SIM.
+    </p>
+
+    <h2>Known limitations</h2>
+    <ul>
+      <li>
+        <strong>The screen still dims while you're using the lock-screen controls.</strong> iOS
+        does not let a third-party Live Activity hold the display awake, and tapping its buttons
+        doesn't reset the sleep timer. The − and + still work; the screen just may have faded
+        before you reach for them.
+      </li>
+      <li>
+        <strong>The lock-screen card can outlive a force-quit.</strong> iOS gives a force-quit app
+        no chance to clean up, so the card may linger. Opening Green Onions again clears it.
+      </li>
+      <li>
+        <strong>Skipping while paused starts playback.</strong> This matches how most music apps
+        behave, and it's deliberate.
+      </li>
+      <li>
+        <strong>No Apple Watch app, and no automatic cadence detection</strong> in this version.
+      </li>
+    </ul>
+
+    <h2>Privacy</h2>
+    <p>
+      Green Onions collects nothing at all — no accounts, no analytics, no network connections of
+      any kind. The full policy is at <a href="/privacy.html">greenonions.app/privacy.html</a>.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← Back to Green Onions</a>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+
+</body>
+</html>
