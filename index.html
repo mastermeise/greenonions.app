@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Green Onions — Run to your beat.</title>
-<meta name="description" content="Land your feet on the beat every run — to the songs you already love. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Bring your own MP3s: it plays files on your phone, not Spotify or Apple Music streaming. Fully offline, nothing tracked.">
+<meta name="description" content="Make every song a running song. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Plays MP3s and M4As you own — not Spotify or Apple Music subscriptions. Free, offline, no account.">
 
 <meta property="og:title" content="Green Onions — Run to your beat.">
-<meta property="og:description" content="Land your feet on the beat every run — to the songs you already love. Pitch-preserved, fully offline, nothing tracked.">
+<meta property="og:description" content="Make every song a running song. Set a target BPM and your whole playlist matches it, pitch intact. Plays music you own — free, offline, no account.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://greenonions.app/">
 <meta name="twitter:card" content="summary_large_image">
@@ -131,8 +131,11 @@ header .wrap{display:flex;align-items:center}
 /* Second clause in lime — same ink/accent split the .big and .quote blocks
    already use, and it keeps a long all-caps headline from reading as a wall. */
 .hero h1 em{font-style:normal;color:var(--lime)}
-.hero .lede{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:46ch}
-.hero .lede strong{color:var(--ink);font-weight:600}
+/* Full ink, unlike the .lede in every section below it. This one is the
+   promise itself rather than supporting copy, and it used to carry a bolded
+   payoff line to give it weight; without that it needs the contrast on its
+   own or the hero trails off into grey under the headline. */
+.hero .lede{font-size:clamp(17px,2vw,20px);color:var(--ink);max-width:46ch}
 
 /* ---------- cta ---------- */
 .cta{
@@ -144,6 +147,12 @@ header .wrap{display:flex;align-items:center}
 .cta:hover{filter:brightness(1.08)}
 .cta:active{transform:scale(.97)}
 .ctasub{font-size:13.5px;color:var(--muted);margin:12px 0 0}
+/* Compatibility, in the hero. Styled as a second .ctasub rather than as a
+   callout: these two lines are the same KIND of thing (spec facts under the
+   ask), and giving one of them a rule, a bold, and its own indent made the
+   hero's quietest corner its busiest. Same size, same colour, tight to the
+   line above so they read as one two-line block. */
+.specnote{font-size:13.5px;color:var(--muted);margin:5px 0 0;max-width:44ch;text-wrap:balance}
 
 /* The interactive BPM-sync hero visual that lived here was pulled for reading
    as too technical up top. Preserved, working, in design/explorations.html. */
@@ -219,6 +228,11 @@ header .wrap{display:flex;align-items:center}
 /* Same size as the numeral, like the app's own "1.56×" readout. */
 .playlist .n small{font-size:.9em;font-weight:inherit;letter-spacing:0}
 
+/* Row counts differ between the wide and narrow layouts below, so the prose
+   that counts them has to swap too. Declared before the media query — an
+   equal-specificity rule after it would win and blank both spans. */
+.only-narrow{display:none}
+
 /* Under 640px the three numeric columns won't sit beside a 44px thumbnail
    without crushing the titles, so each row becomes a two-line block: track
    up top, the three figures underneath with their labels restated. */
@@ -238,6 +252,14 @@ header .wrap{display:flex;align-items:center}
     font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;
     font-size:10px;font-weight:600;color:var(--muted);margin-bottom:3px
   }
+  /* Six stacked two-line rows is a wall of scrolling on a phone, and the point
+     lands in three. The three that survive are chosen, not truncated: 1.03×
+     (a song that barely moves), 1.17× (the namesake), and 1.48× (the Neil
+     Young row the pull-quote underneath depends on) — so the spread stays
+     visible and the hook is never the one that gets cut. */
+  .playlist tr.xrow{display:none}
+  .only-wide{display:none}
+  .only-narrow{display:inline}
 }
 .tablenote{font-size:14px;color:var(--muted);margin:22px 0 0;max-width:60ch}
 
@@ -382,6 +404,23 @@ header .wrap{display:flex;align-items:center}
 /* The names people actually search for should survive a skim. */
 .yesno .no li b{color:var(--ink);font-weight:600}
 
+/* ---------- steps ----------
+   Three cells, same grid language as .who and .yesno so the page keeps one
+   shape vocabulary. This exists because the page previously never said, in
+   order, what you actually do — it went straight from the promise to a
+   feature. The step numeral is the lime, matching .who's .rng treatment. */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.steps > div{background:var(--asphalt);padding:clamp(26px,3.6vw,34px) clamp(22px,3vw,30px)}
+.steps .num{
+  font-family:Oswald,sans-serif;font-weight:700;color:var(--lime);
+  font-size:clamp(26px,3.4vw,34px);line-height:1;letter-spacing:.02em;
+  display:block;margin-bottom:14px;font-variant-numeric:tabular-nums
+}
+.steps h3{font-size:19px;font-weight:600;margin-bottom:8px;letter-spacing:.04em}
+.steps p{font-size:15.5px;color:var(--muted);margin:0}
+
 /* ---------- who ----------
    Two numbers, stated as one person's settings rather than as a spec. The
    BPM range is the biggest thing in each cell — it's the only part a reader
@@ -446,8 +485,8 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .playlist tbody tr{transition:background .22s ease}
   .playlist tbody tr:hover{background:rgba(255,255,255,.025)}
   .playlist tbody tr:hover .trk img{transform:scale(1.05)}
-  .who > div,.yesno > div{transition:background .25s ease}
-  .who > div:hover,.yesno > div:hover{background:#131519}
+  .who > div,.yesno > div,.steps > div{transition:background .25s ease}
+  .who > div:hover,.yesno > div:hover,.steps > div:hover{background:#131519}
   .btn:hover{filter:brightness(1.1)}
   footer a{transition:color .2s ease,border-color .2s ease}
 }
@@ -501,11 +540,11 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     <div class="split">
       <div>
         <p class="eyebrow">Run to your beat</p>
-        <h1>Land your feet on the beat every run, <em>to the songs you already love.</em></h1>
+        <h1>Make every song a <em>running song.</em></h1>
 
         <p class="lede" style="margin-bottom:clamp(28px,4vw,36px)">
           Set a target BPM. Every song on your playlist gets matched to that beat,
-          sped up to meet you, pitch intact. <strong>No chipmunks.</strong>
+          sped up to meet you, pitch intact.
         </p>
 
         <!-- Public TestFlight invite link for the "Friends" external group.
@@ -513,6 +552,14 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
              lapsed and a new one needs uploading, not a new link. -->
         <a class="cta" href="https://testflight.apple.com/join/2DVpM272">Join the TestFlight beta</a>
         <p class="ctasub">Free · iPhone · no account, no subscription</p>
+        <!-- The disqualifier, stated on the first screen rather than four
+             sections down. Most people read "songs you already love" as their
+             Spotify library; saying otherwise here saves them the install and
+             saves us the one-star review. The full version is the "Bring your
+             own music" callout further down. -->
+        <p class="specnote">
+          Plays music you own — not Spotify or Apple Music subscriptions.
+        </p>
       </div>
 
       <div class="herophone">
@@ -557,6 +604,33 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 
 
+<!-- Three steps, immediately after the promise. The page used to jump from the
+     headline straight to the lock-screen feature, which meant a first-time
+     reader saw what it *does well* before they knew what it *is*. -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Start to finish</p>
+    <h2>How it works</h2>
+    <div class="steps">
+      <div>
+        <span class="num">01</span>
+        <h3>Add your music</h3>
+        <p>MP3s and M4As from the Files app, or songs already in your phone's music library.</p>
+      </div>
+      <div>
+        <span class="num">02</span>
+        <h3>Set your BPM</h3>
+        <p>The cadence you actually run at. Most runners land somewhere between 150 and 170.</p>
+      </div>
+      <div>
+        <span class="num">03</span>
+        <h3>Run in sync</h3>
+        <p>Every song stretches to meet that number. Pitch untouched, and adjustable mid-run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
     <div class="split">
@@ -600,7 +674,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
     </p>
     <table class="playlist">
-      <caption>Six songs, one 160 BPM target</caption>
+      <caption><span class="only-wide">Six</span><span class="only-narrow">Three</span> songs, one 160 BPM target</caption>
       <thead>
         <tr>
           <th scope="col">Song</th>
@@ -632,7 +706,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
           <td class="n n-target" data-label="Target">160</td>
           <td class="n n-rate" data-label="Rate">1.03<small>×</small></td>
         </tr>
-        <tr>
+        <tr class="xrow">
           <td>
             <div class="trk">
               <img src="img/art/dreams.jpg" alt="" width="44" height="44" loading="lazy">
@@ -643,7 +717,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
           <td class="n n-target" data-label="Target">160</td>
           <td class="n n-rate" data-label="Rate">1.24<small>×</small></td>
         </tr>
-        <tr>
+        <tr class="xrow">
           <td>
             <div class="trk">
               <img src="img/art/stuck.jpg" alt="" width="44" height="44" loading="lazy">
@@ -654,7 +728,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
           <td class="n n-target" data-label="Target">160</td>
           <td class="n n-rate" data-label="Rate">1.29<small>×</small></td>
         </tr>
-        <tr>
+        <tr class="xrow">
           <td>
             <div class="trk">
               <img src="img/art/centerfold.jpg" alt="" width="44" height="44" loading="lazy">
@@ -680,7 +754,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     </table>
 
     <p class="tablenote">
-      Six songs recorded decades apart, one beat under your feet. The target column
+      <span class="only-wide">Six</span><span class="only-narrow">Three</span> songs recorded decades apart, one beat under your feet. The target column
       never moves — the app works out the rest. These BPMs are the app's own,
       measured from a real playlist.
     </p>
@@ -755,6 +829,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   <div class="wrap">
     <span>© 2026 Brian Meise</span>
     <nav>
+      <a href="/support.html">Support</a>
       <a href="/privacy.html">Privacy</a>
       <a href="https://brianmeise.com">brianmeise.com</a>
     </nav>
@@ -853,7 +928,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     '.split > div > .eyebrow', '.split > div > h2', '.split > div > .lede', '.split > div > .muted',
     '.lockcard', '.hint',
     '.playlist caption', '.playlist thead', '.playlist tbody tr',
-    '.tablenote', '.quotecard', '.callout', '.who > div'
+    '.tablenote', '.quotecard', '.callout', '.who > div', '.steps > div', '.specnote'
   ].join(',');
 
   var io = new IntersectionObserver(function (entries) {
