@@ -61,17 +61,22 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective date: July 31, 2026</p>
+    <p class="updated">Effective date: August 10, 2026</p>
 
     <h2>The short version</h2>
     <div class="callout">
-      <p><strong>Green Onions does not collect, transmit, or share any of your data.</strong></p>
+      <p><strong>Green Onions has no accounts, no analytics, no advertising, and no tracking
+      of any kind.</strong></p>
     </div>
     <p>
-      There are no accounts, no sign-in, no analytics, no advertising, and no third-party services
-      in the app. Everything the app stores stays on your device. That's the whole policy — the rest
-      is just detail. (This website is a separate thing from the app; it's covered
-      <a href="#website">at the bottom</a>.)
+      Nothing you do in the app is recorded, profiled, or sold, and nothing identifies you.
+    </p>
+    <p>
+      The app is not entirely offline any more. If you connect Apple Music, Green Onions talks to
+      Apple to list your playlists and stream your songs, and it asks one music database for the
+      tempo of a song it can't measure itself. What gets sent is described below, in full. Music
+      stored on your device never leaves it. (This website is a separate thing from the app; it's
+      covered <a href="#website">at the bottom</a>.)
     </p>
 
     <h2>What the app accesses on your device</h2>
@@ -85,14 +90,47 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       <li><strong>Your local media library and iTunes purchases (only with your permission).</strong>
       If you choose to import from your device's music library, iOS asks for your permission first.
       When granted, Green Onions copies the songs you specifically pick into its own storage so it can
-      analyze and tempo-match them offline. It does not read, upload, or catalog your wider library.
-      Apple Music subscription downloads are DRM-protected and cannot be imported at all.</li>
+      analyze and tempo-match them offline. It does not read, upload, or catalog your wider library.</li>
+      <li><strong>Apple Music (only with your permission).</strong> If you connect Apple Music, iOS
+      asks for your permission first. When granted, Green Onions reads your playlists and their
+      contents so it can list them and play them at your cadence. It does not modify your playlists,
+      your library, or your listening history.</li>
     </ul>
-    <p>In both cases the music stays <strong>on your device</strong>. It is never uploaded anywhere.</p>
+    <p>
+      Music that lives on your device stays <strong>on your device</strong>. It is never uploaded
+      anywhere.
+    </p>
+
+    <h2>What the app sends over the network</h2>
+    <p>
+      Green Onions has no servers of its own, and no data about you is sent anywhere. It makes three
+      kinds of outbound request, all of them in service of playing a song:
+    </p>
+    <ul>
+      <li><strong>Apple Music (Apple).</strong> Listing your playlists, fetching their contents, and
+      streaming audio. These requests go to Apple through the system's own MusicKit framework and are
+      handled by Apple under <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>.
+      Green Onions has no access to your Apple Account credentials.</li>
+      <li><strong>Tempo lookup (Deezer).</strong> A streamed song never reaches the app as a file, so
+      its tempo can't be measured the way an imported song's can. To find it, Green Onions queries the
+      public Deezer API with the song's <strong>ISRC</strong> — the recording's standard industry
+      identifier — or, failing that, with its <strong>artist and title</strong>. Nothing else is sent:
+      no account, no device identifier, no library contents, and nothing that says who is asking.
+      Deezer, like any web server, sees the IP address the request came from. Deezer's own policy is
+      at <a href="https://www.deezer.com/legal/personal-datas">deezer.com/legal/personal-datas</a>.</li>
+      <li><strong>Preview clips (Apple).</strong> When the lookup above finds nothing, Green Onions
+      downloads the song's public 30-second preview clip from Apple's catalog and measures the tempo
+      from it on your device. The clip is analyzed and discarded; only the resulting number is
+      kept.</li>
+    </ul>
+    <p>
+      These requests happen when you open an Apple Music playlist. If you never connect Apple Music,
+      the app makes no network connections at all.
+    </p>
 
     <h2>What the app collects</h2>
     <p>
-      <strong>Nothing.</strong> Green Onions has no servers and makes no network connections. It does
+      <strong>Nothing.</strong> Green Onions has no servers, no accounts, and no analytics. It does
       not collect personal information, usage data, location, contacts, identifiers, or diagnostics.
       Your song library, your detected and edited BPM values, and your pace settings are stored only
       in the app's local storage on your device.
@@ -101,13 +139,17 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <h2>Accounts</h2>
     <p>
       There are none. Green Onions does not require or offer account creation, and there is no login.
+      Connecting Apple Music uses the Apple Account already signed in on your device; the app never
+      sees those credentials.
     </p>
 
     <h2>Third parties</h2>
     <p>
       <strong>The app</strong> includes no third-party analytics, advertising, tracking, or software
-      development kits. No data is shared with anyone, because no data is collected. <strong>This
-      website</strong> is a different matter, and it's described <a href="#website">below</a>.
+      development kits. The only outside services it contacts are <strong>Apple</strong>, for Apple
+      Music playback, and <strong>Deezer</strong>, for tempo data — both described above, and neither
+      one told anything about you. <strong>This website</strong> is a different matter, and it's
+      described <a href="#website">below</a>.
     </p>
 
     <h2>Children</h2>
