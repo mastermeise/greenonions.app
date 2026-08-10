@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Green Onions — Run to your beat.</title>
-<meta name="description" content="Make every song a running song. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Plays MP3s and M4As you own — not Spotify or Apple Music subscriptions. Free, offline, no account.">
+<meta name="description" content="Make every song a running song. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Works with Apple Music, or MP3s and M4As you own. No account, no ads. 7 days free.">
 
 <meta property="og:title" content="Green Onions — Run to your beat.">
-<meta property="og:description" content="Make every song a running song. Set a target BPM and your whole playlist matches it, pitch intact. Plays music you own — free, offline, no account.">
+<meta property="og:description" content="Make every song a running song. Set a target BPM and your whole playlist matches it, pitch intact. Works with Apple Music, or music you own. 7 days free.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://greenonions.app/">
 <meta name="twitter:card" content="summary_large_image">
@@ -122,8 +122,12 @@ header .wrap{display:flex;align-items:center}
    so it breathes rather than fighting to fit too much above the fold. */
 .hero{padding-top:clamp(24px,4vw,48px);position:relative}
 /* The hero's kicker sits tight to the headline and stays grey — it's a lead-in
-   to the sentence below it, not a section label like the lime eyebrows further
-   down the page, and lime up here competed with the headline's own accent. */
+   to the sentence below it, and lime up here competed with the headline's own
+   accent. It is now the ONLY eyebrow on the page: the six lime section labels
+   were cut 2026-08-10 (Brian) because they front-loaded every heading with a
+   second, smaller heading. This one stays — "Run to your beat" is also the App
+   Store name and the app's own tagline, so it's the thread tying the three
+   surfaces together, not a label. */
 .hero .eyebrow{color:var(--muted);margin-bottom:10px}
 /* The headline is a full sentence now, not three words, so it's sized to sit
    as a readable block of 3–4 lines rather than to fill the viewport. */
@@ -146,13 +150,11 @@ header .wrap{display:flex;align-items:center}
 }
 .cta:hover{filter:brightness(1.08)}
 .cta:active{transform:scale(.97)}
-.ctasub{font-size:13.5px;color:var(--muted);margin:12px 0 0}
-/* Compatibility, in the hero. Styled as a second .ctasub rather than as a
-   callout: these two lines are the same KIND of thing (spec facts under the
-   ask), and giving one of them a rule, a bold, and its own indent made the
-   hero's quietest corner its busiest. Same size, same colour, tight to the
-   line above so they read as one two-line block. */
-.specnote{font-size:13.5px;color:var(--muted);margin:5px 0 0;max-width:44ch;text-wrap:balance}
+/* One quiet line under the ask. It was three stacked blocks for a while —
+   price, platform, compatibility — and three greys in a column under a button
+   is a wall, not a footnote. Held to ~52ch and balanced so it breaks into two
+   even lines instead of one long one and an orphan. */
+.ctasub{font-size:13.5px;color:var(--muted);margin:12px 0 0;max-width:52ch;text-wrap:balance}
 
 /* The interactive BPM-sync hero visual that lived here was pulled for reading
    as too technical up top. Preserved, working, in design/explorations.html. */
@@ -179,9 +181,9 @@ header .wrap{display:flex;align-items:center}
 .quote p em{font-style:normal;font-weight:600;color:var(--lime)}
 .attrib{font-size:14px;color:var(--muted);margin:0}
 
-/* Quote, boxed — lives in "The surprise" section now, not the hero. Same
-   quote/attrib pair, just inside a card so it reads as a testimonial beat
-   rather than running straight into body copy. */
+/* Quote, boxed. Same quote/attrib pair as the old hero version, just inside a
+   card so it reads as a testimonial beat rather than running straight into
+   body copy. */
 .quotecard{
   border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.028);
   padding:clamp(26px,4vw,38px) clamp(26px,4vw,40px);margin-top:clamp(28px,4.5vw,40px);
@@ -189,6 +191,24 @@ header .wrap{display:flex;align-items:center}
 }
 .quotecard .quote{border-left:0;padding:0;margin:0 0 10px;max-width:none}
 .quotecard .quote p{font-size:clamp(22px,3.2vw,30px)}
+
+/* Heading beside the quote. The card is narrower and quieter here than it was
+   as a section closer — it's a caption to the claim, not the payoff after the
+   proof, so it must not out-shout the h2 it sits next to. Stacks below 900px,
+   where two columns would leave the headline three words wide. */
+.surprisehead{
+  display:grid;grid-template-columns:1fr minmax(0,330px);
+  gap:clamp(28px,4vw,60px);align-items:center
+}
+@media (max-width:900px){.surprisehead{grid-template-columns:1fr;gap:0}}
+.surprisehead .lede{margin-bottom:0}
+.surprisehead .quotecard{max-width:none}
+.surprisehead .quotecard .quote p{font-size:clamp(19px,2.1vw,24px)}
+/* Stacked, it's a closing beat again rather than a side note, so it takes back
+   its top margin and its own width. */
+@media (max-width:900px){
+  .surprisehead .quotecard{max-width:36ch}
+}
 
 /* ---------- playlist table ----------
    The whole pitch as arithmetic: one target column that never changes,
@@ -294,44 +314,16 @@ header .wrap{display:flex;align-items:center}
 .herophone .screen img{display:block;width:100%;height:auto}
 
 /* ---------- phone chrome ----------
-   The capture is app UI only (1206×2085, cropped, no system bars), so it read
-   as a cut-down phone rather than a screen. Status bar, Dynamic Island and
-   home indicator are drawn in CSS around it — they also add the vertical room
-   that brings the screen back toward a real handset's proportions. */
-.herophone .statusbar{
-  position:relative;flex:none;height:38px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 20px;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.01em
-}
-.herophone .island{
-  position:absolute;left:50%;top:7px;transform:translateX(-50%);
-  width:74px;height:22px;border-radius:999px;background:#000
-}
-.herophone .sb-icons{display:flex;align-items:center;gap:5px}
-.herophone .sb-icons svg{display:block;fill:var(--ink)}
-/* The app's own tab bar — Now Playing / Library / About, the three tabs in
-   RootView.swift, selected tab tinted lime like the shipped tint. The capture
-   was cropped above it, so it's rebuilt here rather than re-shot. */
-.herophone .tabbar{
-  flex:none;display:flex;padding:9px 0 2px;
-  border-top:1px solid rgba(242,244,240,.07);
-  background:rgba(255,255,255,.022)
-}
-.herophone .tabbar a{
-  flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:3px;
-  text-decoration:none;color:var(--slate);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  font-size:9.5px;font-weight:500;letter-spacing:.01em
-}
-.herophone .tabbar a.on{color:var(--lime)}
-.herophone .tabbar svg{display:block;fill:currentColor}
-.herophone .homebar{
-  flex:none;height:26px;display:flex;align-items:center;justify-content:center
-}
-.herophone .homebar::after{
-  content:"";width:36%;height:4px;border-radius:999px;background:rgba(242,244,240,.9)
-}
+   THERE IS NONE ANY MORE, AND THAT IS DELIBERATE. The capture used to be app
+   UI only (1206×2085, no system bars), which read as a cut-down phone, so the
+   status bar, Dynamic Island, app tab bar and home indicator were all drawn in
+   CSS around it. Re-shot 2026-08-10 as a FULL 1206×2622 device screen — real
+   status bar (simctl status_bar override: 9:41, full bars, full battery), real
+   tab bar, real home indicator — so every one of those rules was deleted
+   rather than left to draw a second copy on top of the real thing.
+   ⚠️ If the screenshot is ever re-cropped to app UI only, they have to come
+   back; the git history for this block is the reference. */
+
 /* The "slight shine" — a soft diagonal highlight, like light on a screen protector. */
 .herophone .screen::after{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -564,51 +556,26 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
            href="https://apps.apple.com/app/apple-store/id6793750166?pt=PROVIDER_TOKEN&amp;ct=website&amp;mt=8">Get it on the App Store</a>
         -->
 
-        <p class="ctasub">Free · iPhone · no account, no subscription</p>
-        <!-- The disqualifier, stated on the first screen rather than four
-             sections down. Most people read "songs you already love" as their
-             Spotify library; saying otherwise here saves them the install and
-             saves us the one-star review. The full version is the "Bring your
-             own music" callout further down. -->
-        <p class="specnote">
-          Plays music you own — not Spotify or Apple Music subscriptions.
+        <!-- ONE line under the ask, not three. Price used to sit here too and
+             it made the hero's quietest corner its busiest — pricing now has
+             its own section, which is where someone who cares goes looking.
+             What's left is the two things that decide whether to tap at all:
+             what it costs you today, and whether your music qualifies. The
+             Spotify half still earns its place — it's what stops the wrong
+             install and the one-star review that follows.
+             ▼ LAUNCH DAY: "Free while it's in beta" becomes "7 days free". -->
+        <p class="ctasub">
+          Free while it's in beta. Works with Apple Music, or songs you own — not Spotify.
         </p>
       </div>
 
+      <!-- A whole device screen, straight off the simulator — status bar, app,
+           tab bar, home indicator. Nothing is drawn around it; see the phone
+           chrome note in the stylesheet before adding anything back. -->
       <div class="herophone">
         <div class="screen">
-          <div class="statusbar" aria-hidden="true">
-            <span>9:41</span>
-            <span class="island"></span>
-            <span class="sb-icons">
-              <!-- cellular -->
-              <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.7" y="5.5" width="3" height="5.5" rx="1"/><rect x="9.4" y="3" width="3" height="8" rx="1"/><rect x="14.1" y="0" width="3" height="11" rx="1"/></svg>
-              <!-- wifi -->
-              <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 10.6 6.1 8.4a2.9 2.9 0 0 1 3.8 0zM4.6 6.6a5.3 5.3 0 0 1 6.8 0l1.3-1.5a7.3 7.3 0 0 0-9.4 0zM1.3 2.8a9.9 9.9 0 0 1 13.4 0L16 1.3a11.9 11.9 0 0 0-16 0z"/></svg>
-              <!-- battery -->
-              <svg width="25" height="11" viewBox="0 0 25 11"><rect x=".5" y=".5" width="21" height="10" rx="3" fill="none" stroke="currentColor" stroke-opacity=".4" style="stroke:var(--ink)"/><rect x="2" y="2" width="15" height="7" rx="1.8"/><path d="M23 4v3a2 2 0 0 0 0-3z"/></svg>
-            </span>
-          </div>
-          <img src="img/nowplaying.png" loading="eager"
-            alt="Green Onions Now Playing screen: target 155 BPM, song 100 BPM, playing at 1.56× to bridge them">
-          <div class="tabbar" aria-hidden="true">
-            <a class="on">
-              <!-- waveform -->
-              <svg width="21" height="17" viewBox="0 0 21 17"><rect x="0" y="7" width="1.8" height="3" rx=".9"/><rect x="3.8" y="4.5" width="1.8" height="8" rx=".9"/><rect x="7.6" y="1" width="1.8" height="15" rx=".9"/><rect x="11.4" y="5.5" width="1.8" height="6" rx=".9"/><rect x="15.2" y="2.5" width="1.8" height="12" rx=".9"/><rect x="19" y="6.5" width="1.8" height="4" rx=".9"/></svg>
-              Now Playing
-            </a>
-            <a>
-              <!-- music.note.list -->
-              <svg width="21" height="17" viewBox="0 0 21 17"><rect x="0" y="2" width="10" height="1.7" rx=".85"/><rect x="0" y="7.2" width="10" height="1.7" rx=".85"/><rect x="0" y="12.4" width="7" height="1.7" rx=".85"/><path d="M20 1.2v9.1a2.7 2.7 0 1 1-1.7-2.5V4L14 5v6.9a2.7 2.7 0 1 1-1.7-2.5V3.6z"/></svg>
-              Library
-            </a>
-            <a>
-              <!-- info.circle -->
-              <svg width="21" height="17" viewBox="0 0 21 17"><path d="M10.5 0a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17m0 1.7a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6"/><circle cx="10.5" cy="4.7" r="1.05"/><rect x="9.6" y="6.9" width="1.8" height="6" rx=".9"/></svg>
-              About
-            </a>
-          </div>
-          <div class="homebar" aria-hidden="true"></div>
+          <img src="img/nowplaying.png" loading="eager" width="1206" height="2622"
+            alt="Green Onions Now Playing screen: target 160 BPM, the song 132 BPM, playing at 1.22× to bridge them">
         </div>
       </div>
     </div>
@@ -622,13 +589,12 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
      reader saw what it *does well* before they knew what it *is*. -->
 <section>
   <div class="wrap">
-    <p class="eyebrow">Start to finish</p>
     <h2>How it works</h2>
     <div class="steps">
       <div>
         <span class="num">01</span>
         <h3>Add your music</h3>
-        <p>MP3s and M4As from the Files app, or songs already in your phone's music library.</p>
+        <p>Connect Apple Music and pick a playlist, or bring MP3s and M4As of your own.</p>
       </div>
       <div>
         <span class="num">02</span>
@@ -648,15 +614,11 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   <div class="wrap">
     <div class="split">
       <div>
-        <p class="eyebrow">Turn it up a notch</p>
         <h2>Change it mid-run</h2>
         <p class="lede">
           The target BPM lives right on your lock screen. Tap
           <strong style="color:var(--lime)">+</strong> and the whole playlist climbs to
           meet you — no unlocking, no fumbling, no stopping.
-        </p>
-        <p class="muted" style="font-size:15px">
-          A Live Activity, also available in the Dynamic Island.
         </p>
       </div>
       <div>
@@ -679,13 +641,25 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">The surprise</p>
-    <h2>Your whole library is running music</h2>
-    <p class="lede">
-      That was the part I didn't expect. When any song can meet your cadence, "running music" stops being
-      a genre you tolerate and starts being the music you actually love. Records that were never
-      remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
-    </p>
+    <!-- The quote used to close this section, below the table. It reads better
+         as the section's own subtitle: the claim on the left, the person it
+         happened to on the right, before the table proves it in numbers. -->
+    <div class="surprisehead">
+      <div>
+        <h2>Your whole library is running music</h2>
+        <p class="lede">
+          That was the part I didn't expect. When any song can meet your cadence, "running music" stops being
+          a genre you tolerate and starts being the music you actually love. Records that were never
+          remotely workout material turn out to be perfect — they just needed to arrive at the right tempo.
+        </p>
+      </div>
+      <div class="quotecard">
+        <blockquote class="quote">
+          <p>I never knew I could run to <em>Neil Young</em>.</p>
+        </blockquote>
+        <p class="attrib">— Brian, who built it</p>
+      </div>
+    </div>
     <table class="playlist">
       <caption><span class="only-wide">Six</span><span class="only-narrow">Three</span> songs, one 160 BPM target</caption>
       <thead>
@@ -771,32 +745,26 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       never moves — the app works out the rest. These BPMs are the app's own,
       measured from a real playlist.
     </p>
-
-    <div class="quotecard">
-      <blockquote class="quote">
-        <p>I never knew I could run to <em>Neil Young</em>.</p>
-      </blockquote>
-      <p class="attrib">— Brian, who built it</p>
-    </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <div class="callout">
-      <p class="eyebrow">One catch</p>
-      <h2>Bring your own music</h2>
+      <h2>Apple Music, or music you own</h2>
       <p class="lede">
-        Green Onions plays audio files that live on your phone. It <strong
-        style="color:var(--ink);font-weight:600">cannot</strong> play a streaming
-        subscription — those downloads are encrypted, and no third-party app is
-        allowed to open them. If everything you listen to is a subscription, this
-        app will have nothing to play.
+        Connect Apple Music and your playlists play at your cadence — nothing to
+        download, nothing to convert. Everything else has to be a file you own.
+        Green Onions <strong style="color:var(--ink);font-weight:600">cannot</strong>
+        play Spotify, on any tier: those downloads are encrypted, and no third-party
+        app is allowed to open them or change their speed. Apple Music is the one
+        subscription that permits it.
       </p>
       <div class="yesno">
         <div class="yes">
           <h3>Works</h3>
           <ul>
+            <li><b>Apple Music</b> — with an active subscription</li>
             <li>MP3 and M4A files you own</li>
             <li>iTunes Store purchases</li>
             <li>Anything you can drop into the Files app</li>
@@ -806,7 +774,6 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
           <h3>Doesn't work</h3>
           <ul>
             <li><b>Spotify</b> — any tier, including Premium</li>
-            <li><b>Apple Music</b> subscription downloads</li>
             <li><b>YouTube Music</b>, Amazon Music, Tidal</li>
           </ul>
         </div>
@@ -817,7 +784,6 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">Anyone keeping time</p>
     <h2>Who it's for</h2>
     <p class="lede" style="max-width:52ch">
       Runners and jump ropers. I can only tell you where I set mine — start near it
@@ -835,6 +801,38 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
         <p>Where the rope comes round when I'm skipping.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Pricing. Reuses .who's grid rather than inventing a pricing table: two
+     cells, big lime number, one line of terms each — the page already taught
+     the reader to read that shape. The reverse trial is the lede's whole job,
+     because "free trial" normally means "and then it stops working", and here
+     it doesn't: what you added keeps playing forever. -->
+<section>
+  <div class="wrap">
+    <h2>Seven days free</h2>
+    <p class="lede" style="max-width:58ch">
+      Everything unlocked for a week. After that, the songs you've already added keep
+      playing at your cadence whether you pay or not — a trial that ends shouldn't take
+      your music with it. Paying is what keeps the doors open: adding new songs, and
+      Apple Music.
+    </p>
+    <div class="who">
+      <div>
+        <span class="rng">$2.99<small>/MO</small></span>
+        <h3>Monthly</h3>
+        <p>First seven days free. Cancel any time from your Apple Account.</p>
+      </div>
+      <div>
+        <span class="rng">$18.99<small>ONCE</small></span>
+        <h3>Lifetime</h3>
+        <p>One payment, not a subscription. About six months of monthly, and then never again.</p>
+      </div>
+    </div>
+    <p class="tablenote">
+      No ads, ever. No account to make. Built by one runner who wanted this to exist.
+    </p>
   </div>
 </section>
 
@@ -941,7 +939,10 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     '.split > div > .eyebrow', '.split > div > h2', '.split > div > .lede', '.split > div > .muted',
     '.lockcard', '.hint',
     '.playlist caption', '.playlist thead', '.playlist tbody tr',
-    '.tablenote', '.quotecard', '.callout', '.who > div', '.steps > div', '.specnote'
+    // The "running music" heading and its quote are nested a level deeper than
+    // the generic section selectors reach, so they're armed as two cells.
+    '.surprisehead > div',
+    '.tablenote', '.quotecard', '.callout', '.who > div', '.steps > div'
   ].join(',');
 
   var io = new IntersectionObserver(function (entries) {

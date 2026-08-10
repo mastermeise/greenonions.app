@@ -71,7 +71,7 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Support</h1>
-    <p class="updated">Green Onions for iPhone · version 1.0</p>
+    <p class="updated">Green Onions for iPhone · version 1.1</p>
 
     <div class="contact">
       <p class="lbl">Email</p>
@@ -82,22 +82,34 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       </p>
     </div>
     <p class="note">
-      You can also reach the same address from inside the app: <strong>About → Send feedback</strong>.
+      You can also reach the same address from inside the app: <strong>Settings → Send
+      feedback</strong>. The same answers are in the app under <strong>Settings → FAQ</strong>.
     </p>
 
     <h2>Getting started</h2>
 
     <h3>How do I add music?</h3>
-    <p>Two ways, both on the <strong>Library</strong> tab:</p>
+    <p>Three ways, all on the <strong>Library</strong> tab:</p>
     <ul>
+      <li><strong>Apple Music</strong> — connect it once and your playlists appear, ready to
+      play at your cadence. Nothing is downloaded or converted, and your playlists stay exactly
+      as they are.</li>
       <li><strong>Add from Files</strong> — pick MP3 or M4A files from the Files app, iCloud Drive,
       or anywhere else that shows up in the file picker.</li>
-      <li><strong>From Music Library</strong> — pick songs already on your phone. This only sees
-      music you own; see the next question.</li>
+      <li><strong>From Music Library</strong> — pick songs already on your phone.</li>
     </ul>
     <p>
-      Green Onions analyzes each song as it comes in and works out its BPM. That takes a few
-      seconds per track, and it only happens once.
+      Songs you add as files get analyzed on the phone as they come in, which takes a few seconds
+      each and happens once. Apple Music songs get their tempo looked up instead — see below.
+    </p>
+
+    <h3>Why are my Apple Music playlists showing, but not my songs?</h3>
+    <p>
+      That's deliberate. You already keep your running playlist in the Music app, so Green Onions
+      mirrors your playlists rather than rebuilding a whole music browser you'd have to maintain
+      twice. Add or remove songs in the Music app and they're here next time you open it. A
+      playlist you never run to can be swiped away — it drops to the bottom, greyed out, rather
+      than being deleted.
     </p>
 
     <h3>Why is my library empty when I open the app?</h3>
@@ -125,9 +137,16 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h3>Does it work with Apple Music?</h3>
     <p>
-      Partly. <strong>Songs you bought</strong> from the iTunes Store work. <strong>Apple Music
-      subscription downloads do not</strong> — those are DRM-protected in the same way Spotify's
-      are. If your whole library is a subscription, Green Onions will have nothing to play.
+      Yes, with an active subscription. Connect it in the Library tab and your playlists play
+      tempo-matched, streamed the same way the Music app streams them. Apple Music is the only
+      streaming service that lets a third-party app control playback speed, which is why it's
+      the only one here.
+    </p>
+
+    <h3>Do I need an Apple Music subscription?</h3>
+    <p>
+      No. Without one, add MP3s and M4As you own and everything works the same way. Apple Music
+      is a second source, not a requirement.
     </p>
 
     <h3>What file types work?</h3>
@@ -140,6 +159,22 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     </p>
 
     <h2>Playback and BPM</h2>
+
+    <h3>Where do the BPM numbers come from?</h3>
+    <p>
+      For songs you add as files, Green Onions listens to the audio and works the tempo out on
+      your phone. An Apple Music song never reaches the app as a file, so its tempo is looked up
+      instead — by the recording's ISRC where one exists, and otherwise measured from the song's
+      public 30-second preview clip. Either way you can override the answer by hand.
+    </p>
+
+    <h3>Why are some songs dimmed?</h3>
+    <p>
+      They don't fit your current cadence. Reaching them would mean stretching the song further
+      than it survives, so they sit out rather than play badly. Change your pace and they light
+      back up. Files you own stretch between half and double speed; Apple Music holds a narrower
+      window, 0.9× to 1.7×, because that's what the system player allows.
+    </p>
 
     <h3>A song's BPM was detected wrong. How do I fix it?</h3>
     <p>
@@ -172,8 +207,45 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h3>Does it work offline?</h3>
     <p>
-      Entirely. Green Onions makes no network connections at all, so it works in airplane mode,
-      in a dead zone, and on a phone with no SIM.
+      Songs you've added as files do, entirely — they live on the phone, so airplane mode, a dead
+      zone and a phone with no SIM are all fine. Apple Music needs a connection, the same as it
+      does in the Music app. Songs still waiting on a tempo lookup stay in line and match the
+      moment you're back.
+    </p>
+
+    <h2>Paying for it</h2>
+
+    <h3>What's free and what isn't?</h3>
+    <p>
+      Playback is never taken away. Songs already in your library — and the demo track — keep
+      playing at your cadence forever, whatever you've paid. What a subscription opens is the
+      rest: adding new songs, and Apple Music.
+    </p>
+
+    <h3>What does it cost?</h3>
+    <p>
+      $2.99 a month with the first seven days free, or $18.99 once for lifetime access. The
+      monthly can be cancelled any time from your Apple Account. There are no ads and no account
+      to create either way.
+    </p>
+
+    <h3>What happens when my trial ends?</h3>
+    <p>
+      Nothing you added stops working. The + button and Apple Music lock, and everything already
+      in your library still plays tempo-matched.
+    </p>
+
+    <h3>I already pay monthly — can I switch to lifetime?</h3>
+    <p>
+      Yes, from <strong>Settings → Upgrade to lifetime</strong> in the app. One thing to know:
+      Apple won't cancel the monthly subscription for you when you do, so cancel it yourself
+      afterwards from your Apple Account.
+    </p>
+
+    <h3>How do I get my purchase back on a new phone?</h3>
+    <p>
+      <strong>Settings → Restore purchases</strong>, signed in with the same Apple Account you
+      bought it with.
     </p>
 
     <h2>Known limitations</h2>
@@ -199,9 +271,11 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>Privacy</h2>
     <p>
-      The app collects nothing at all — no accounts, no analytics, no network connections of any
-      kind. (This website is a separate thing, and it does use privacy-preserving visit counting —
-      that's covered in the policy.) The full policy is at
+      The app collects nothing — no accounts, no analytics, no advertising, no tracking. It does
+      make network requests once you connect Apple Music: to Apple, for your playlists and the
+      audio itself, and to one music database for song tempos. Nothing that identifies you is sent
+      to either. (This website is a separate thing, and it does use privacy-preserving visit
+      counting.) All of it is spelled out at
       <a href="/privacy.html">greenonions.app/privacy.html</a>.
     </p>
   </div>
