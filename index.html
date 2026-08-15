@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Green Onions — Run to your beat.</title>
-<meta name="description" content="Make every song a running song. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Works with Apple Music, or MP3s and M4As you own. No account, no ads. 7 days free.">
+<meta name="description" content="Make every song a running song. Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Works with Apple Music, or MP3s and M4As you own. No account, no ads. Free for your first 25 songs.">
 
 <meta property="og:title" content="Green Onions — Run to your beat.">
-<meta property="og:description" content="Make every song a running song. Set a target BPM and your whole playlist matches it, pitch intact. Works with Apple Music, or music you own. 7 days free.">
+<meta property="og:description" content="Make every song a running song. Set a target BPM and your whole playlist matches it, pitch intact. Works with Apple Music, or music you own. Free for your first 25 songs.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://greenonions.app/">
 <meta name="twitter:card" content="summary_large_image">
@@ -414,9 +414,11 @@ header .wrap{display:flex;align-items:center}
 .steps p{font-size:15.5px;color:var(--muted);margin:0}
 
 /* ---------- who ----------
-   Two numbers, stated as one person's settings rather than as a spec. The
-   BPM range is the biggest thing in each cell — it's the only part a reader
-   actually needs to take away. */
+   ⚠️ The NAME is historical. This was built for a "Who it's for" section
+   (cut 2026-08-14 — see the comment above the pricing section) and is now
+   used only by the pricing grid. Kept as `.who` rather than renamed because
+   the shape is what matters and a rename touches markup for nothing.
+   Two cells: the big lime number is the only part a reader has to take away. */
 .who{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
   border:1px solid var(--line);border-radius:4px;overflow:hidden}
 @media (max-width:620px){.who{grid-template-columns:1fr}}
@@ -563,7 +565,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
              what it costs you today, and whether your music qualifies. The
              Spotify half still earns its place — it's what stops the wrong
              install and the one-star review that follows.
-             ▼ LAUNCH DAY: "Free while it's in beta" becomes "7 days free". -->
+             ▼ LAUNCH DAY: "Free while it's in beta" becomes "Free for your first 25 songs". -->
         <p class="ctasub">
           Free while it's in beta. Works with Apple Music, or songs you own — not Spotify.
         </p>
@@ -782,56 +784,46 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <h2>Who it's for</h2>
-    <p class="lede" style="max-width:52ch">
-      Runners and jump ropers. I can only tell you where I set mine — start near it
-      and nudge from there.
-    </p>
-    <div class="who">
-      <div>
-        <span class="rng">150–160<small>BPM</small></span>
-        <h3>Runners</h3>
-        <p>Where my feet land at an 8:30–9:00 mile.</p>
-      </div>
-      <div>
-        <span class="rng">140–150<small>BPM</small></span>
-        <h3>Jump ropers</h3>
-        <p>Where the rope comes round when I'm skipping.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ⚠️ A "Who it's for" section (runner 150–160 BPM / jump roper 140–150 BPM
+     cells) sat here until 2026-08-14. Cut by Brian: cadence-setting guidance
+     doesn't sell anyone on the app, it's what you want AFTER installing — so
+     it lives in the in-app FAQ instead. Don't put it back on the landing page.
+     `.who` survives as the pricing grid's class; the name is now historical. -->
 
-<!-- Pricing. Reuses .who's grid rather than inventing a pricing table: two
-     cells, big lime number, one line of terms each — the page already taught
-     the reader to read that shape. The reverse trial is the lede's whole job,
-     because "free trial" normally means "and then it stops working", and here
-     it doesn't: what you added keeps playing forever. -->
+<!-- Pricing. Uses the .who grid rather than inventing a pricing table: two
+     cells, big lime number, one line of terms each.
+
+     ⚠️ REWRITTEN 2026-08-14: the subscription is dead. Was "Seven days free"
+     + $2.99/mo + $18.99 lifetime; now one price and a trial counted in songs
+     rather than days. The two cells are no longer two products — they're the
+     trial and the price. Do not reinstate the monthly, and do not describe
+     the trial in days: it is metered in songs played, deliberately, so a
+     week of not running can't burn it. -->
 <section>
   <div class="wrap">
-    <h2>Seven days free</h2>
+    <!-- ⚠️ "Twenty-five songs free" was the first draft and it misreads as an
+         offer of free SONGS — a bundle of music — which is the worst possible
+         wrong idea on a page about a music player. "Free for your first 25"
+         makes it a duration. Keep any rewrite in that shape. -->
+    <h2>Free for your first 25 songs</h2>
     <p class="lede" style="max-width:58ch">
-      Everything unlocked for a week. After that, the songs you've already added keep
-      playing at your cadence whether you pay or not — a trial that ends shouldn't take
-      your music with it. Paying is what keeps the doors open: adding new songs, and
-      Apple Music.
+      Enough to take it out for a few runs before you decide. After that it's
+      $9.99, once.
     </p>
     <div class="who">
       <div>
-        <span class="rng">$2.99<small>/MO</small></span>
-        <h3>Monthly</h3>
-        <p>First seven days free. Cancel any time from your Apple Account.</p>
+        <span class="rng">25<small>LISTENS</small></span>
+        <h3>Free to try</h3>
+        <p>No account to make. Nothing to cancel.</p>
       </div>
       <div>
-        <span class="rng">$18.99<small>ONCE</small></span>
-        <h3>Lifetime</h3>
-        <p>One payment, not a subscription. About six months of monthly, and then never again.</p>
+        <span class="rng">$9.99<small>ONCE</small></span>
+        <h3>Yours forever</h3>
+        <p>One payment. Not a subscription.</p>
       </div>
     </div>
     <p class="tablenote">
-      No ads, ever. No account to make. Built by one runner who wanted this to exist.
+      No ads, ever. Built by one runner who wanted this to exist.
     </p>
   </div>
 </section>
