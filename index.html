@@ -546,8 +546,11 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
              every channel. ct=website is the baked-in default campaign; the
              ?s= handler at the bottom of this file overrides it per channel
              (greenonions.app/?s=strava → ct=strava) and leaves pt alone.
-             data-store-link is what that handler looks for — keep the attribute. -->
-        <a class="cta" data-store-link
+             data-store-link is what that handler looks for — keep the attribute.
+             data-goatcounter-click is GoatCounter's own binder, which fires a
+             "cta-appstore" event on tap (click and middle-click) via sendBeacon,
+             so it survives the navigation away. Keep that attribute too. -->
+        <a class="cta" data-store-link data-goatcounter-click="cta-appstore"
            href="https://apps.apple.com/app/apple-store/id6793750166?pt=129208576&amp;ct=website&amp;mt=8">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zm3.24-2.916c.83-1.014 1.404-2.42 1.25-3.822-1.207.049-2.664.805-3.523 1.816-.771.9-1.443 2.34-1.264 3.72 1.35.104 2.723-.688 3.537-1.714z"/></svg>
           Get it on the App Store
@@ -1053,7 +1056,12 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 // hand out short greenonions.app/?s=<channel> URLs and rewrite the store button's
 // campaign token here. Web analytics then gives the denominator (visits) that
 // App Store Connect can't see, and Apple's per-campaign product-page views give
-// the numerator. Divide → per-channel conversion, with no click tracking.
+// the numerator. Divide → per-channel conversion.
+//
+// The button also carries data-goatcounter-click, which fills in the step between
+// those two numbers. Without it, a gap between visits and product-page views reads
+// the same whether nobody tapped or Apple dropped the attribution — which is exactly
+// the ambiguity the missing pt= token caused.
 //
 // The default campaign is already baked into the href, so with JS off, a mangled
 // param, or this script failing outright, the link is still a valid attributed
