@@ -12,6 +12,15 @@ Static site, hosted on GitHub Pages at <https://greenonions.app>.
 | `index.html` | Landing page. Self-contained; only external request is Oswald from Google Fonts. |
 | `privacy.html` | Privacy policy. **Required by App Store Connect** — this URL goes in the app listing. |
 | `CNAME` | Custom domain for GitHub Pages. Must contain the bare apex domain. |
+| `support.html` | Support page. **Required by App Store Connect** — the listing's support URL. Long-form FAQ; the landing page's Questions section is the short form of the same answers. |
+| `robots.txt` | Allows every crawler, AI assistants included, and points at the sitemap. Added 2026-09-06 after chatgpt.com appeared as a referrer. |
+| `sitemap.xml` | The three pages. Add a row when a page is added. |
+
+## Search and assistants
+
+`index.html` carries JSON-LD (`SoftwareApplication` + `FAQPage`) in its head. The FAQ entries
+mirror the Questions section word for word: change one, regenerate the other. No `llms.txt`,
+deliberately; revisit if assistant referrals become a steady share of visits.
 
 ## Brand tokens
 

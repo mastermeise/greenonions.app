@@ -13,6 +13,105 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E0F12">
 
+<!-- Structured data for search engines and AI assistants. The FAQ entries must
+     match the Questions section word for word; regenerate both together. -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "SoftwareApplication",
+   "name": "Green Onions",
+   "url": "https://greenonions.app/",
+   "operatingSystem": "iOS",
+   "applicationCategory": "MusicApplication",
+   "description": "Set a target BPM and Green Onions matches your whole playlist to it, pitch intact. Works with Apple Music, or MP3s and M4As you own.",
+   "installUrl": "https://apps.apple.com/app/apple-store/id6793750166",
+   "offers": {
+    "@type": "Offer",
+    "price": "9.99",
+    "priceCurrency": "USD",
+    "description": "Free for your first 25 songs, then a one-time purchase. No subscription."
+   },
+   "author": {
+    "@type": "Person",
+    "name": "Brian Meise",
+    "url": "https://brianmeise.com"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Does it work with Apple Music?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, with an active subscription. Connect it once and your playlists play at your cadence, streamed the same way the Music app streams them. Nothing is downloaded or converted."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it work with Spotify?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No, on any tier. Spotify's downloads are encrypted and no third-party app is allowed to open them or change their speed. Apple Music is the one streaming service that permits it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it change the pitch?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Songs speed up or slow down and stay in their original key. Files you own stretch between half and double speed. Apple Music holds a narrower window, 0.9× to 1.7×, because that is what the system player allows."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it measure my cadence?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. You set the number, and every song matches it. There is a − and + on the Lock Screen so you can change it mid-run without unlocking the phone."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is it free?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Your first 25 songs are free with everything unlocked. After that it is $9.99 once. No subscription, no account, no ads. The demo track plays at your cadence forever either way."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it work offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Songs you added as files do, entirely. Apple Music needs a connection, the same as it does in the Music app."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I use it with Strava or another run tracker?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Green Onions is only a music player. It has no GPS and reads no health data, so Strava, Nike Run Club and the Workout app keep running beside it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is there an Android or Apple Watch version?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Green Onions is an iPhone app, and this version has no Apple Watch app."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/img/favicon-16.png" sizes="16x16" type="image/png">
@@ -434,6 +533,22 @@ header .wrap{display:flex;align-items:center}
 .who h3{font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:.05em}
 .who p{font-size:15.5px;color:var(--muted);margin:0}
 
+/* ---------- questions ----------
+   Added 2026-09-06 after chatgpt.com showed up as a referrer. Assistants (and
+   Google) quote question-shaped text far more readily than marketing copy, so
+   the eight questions people actually ask before installing sit here in the
+   literal words they ask them. Answers are the support page's, shortened; the
+   support page and the in-app FAQ stay the long form. Plain HTML on purpose:
+   no disclosure widgets, so the answers are in the DOM for every reader.
+   ⚠️ No cadence-range guidance here (see the "Who it's for" note above). */
+.faq{display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(30px,4.4vw,46px) clamp(32px,5.5vw,64px);margin-top:clamp(26px,4vw,40px)}
+@media (max-width:620px){.faq{grid-template-columns:1fr}}
+.faq h3{font-size:19px;font-weight:600;margin-bottom:8px;letter-spacing:.04em}
+.faq p{font-size:15.5px;color:var(--muted);margin:0;max-width:44ch}
+.faq p a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(225,246,0,.35)}
+.faq p a:hover{border-color:var(--lime)}
+
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);padding:44px 0 60px;font-size:14px;color:var(--muted)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
@@ -805,7 +920,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     <h2>Free for your first 25 songs</h2>
     <p class="lede" style="max-width:58ch">
       Enough to take it out for a few runs before you decide. After that it's
-      $9.99, once. The TestFlight beta is free while it lasts.
+      $9.99, once.
     </p>
     <div class="who">
       <div>
@@ -822,6 +937,61 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     <p class="tablenote">
       No ads, ever. Built by one runner who wanted this to exist.
     </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Questions</h2>
+    <p class="lede" style="max-width:56ch">
+      The short answers. The long ones are on the <a href="/support.html" style="color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(225,246,0,.35)">support page</a>
+      and in the app under Settings.
+    </p>
+    <div class="faq">
+      <div>
+        <h3>Does it work with Apple Music?</h3>
+        <p>Yes, with an active subscription. Connect it once and your playlists play at
+        your cadence, streamed the same way the Music app streams them. Nothing is
+        downloaded or converted.</p>
+      </div>
+      <div>
+        <h3>Does it work with Spotify?</h3>
+        <p>No, on any tier. Spotify's downloads are encrypted and no third-party app is
+        allowed to open them or change their speed. Apple Music is the one streaming
+        service that permits it.</p>
+      </div>
+      <div>
+        <h3>Does it change the pitch?</h3>
+        <p>No. Songs speed up or slow down and stay in their original key. Files you own
+        stretch between half and double speed. Apple Music holds a narrower window,
+        0.9× to 1.7×, because that is what the system player allows.</p>
+      </div>
+      <div>
+        <h3>Does it measure my cadence?</h3>
+        <p>No. You set the number, and every song matches it. There is a − and + on the
+        Lock Screen so you can change it mid-run without unlocking the phone.</p>
+      </div>
+      <div>
+        <h3>Is it free?</h3>
+        <p>Your first 25 songs are free with everything unlocked. After that it is $9.99
+        once. No subscription, no account, no ads. The demo track plays at your cadence
+        forever either way.</p>
+      </div>
+      <div>
+        <h3>Does it work offline?</h3>
+        <p>Songs you added as files do, entirely. Apple Music needs a connection, the
+        same as it does in the Music app.</p>
+      </div>
+      <div>
+        <h3>Can I use it with Strava or another run tracker?</h3>
+        <p>Yes. Green Onions is only a music player. It has no GPS and reads no health
+        data, so Strava, Nike Run Club and the Workout app keep running beside it.</p>
+      </div>
+      <div>
+        <h3>Is there an Android or Apple Watch version?</h3>
+        <p>No. Green Onions is an iPhone app, and this version has no Apple Watch app.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -931,7 +1101,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     // The "running music" heading and its quote are nested a level deeper than
     // the generic section selectors reach, so they're armed as two cells.
     '.surprisehead > div',
-    '.tablenote', '.quotecard', '.callout', '.who > div', '.steps > div'
+    '.tablenote', '.quotecard', '.callout', '.who > div', '.steps > div', '.faq > div'
   ].join(',');
 
   var io = new IntersectionObserver(function (entries) {

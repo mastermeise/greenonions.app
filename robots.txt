@@ -1,0 +1,8 @@
+# Everything on this site is meant to be read, by people and by crawlers alike.
+# Search engines and AI assistants (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot,
+# Google-Extended and the rest) are all welcome. Nothing here is private; the
+# privacy policy is at /privacy.html and is a page like any other.
+User-agent: *
+Allow: /
+
+Sitemap: https://greenonions.app/sitemap.xml
