@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Green Onions</title>
-<meta name="description" content="The Green Onions app does not collect, transmit, or share any of your data. No accounts, no analytics, no advertising, no tracking.">
+<meta name="description" content="Green Onions has no accounts, no advertising and no tracking. The app counts a few anonymous things about its own use, and never what you listen to.">
 <meta name="theme-color" content="#0E0F12">
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
@@ -61,15 +61,16 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective date: September 1, 2026</p>
+    <p class="updated">Effective date: November 8, 2026</p>
 
     <h2>The short version</h2>
     <div class="callout">
-      <p><strong>Green Onions has no accounts, no analytics, no advertising, and no tracking
-      of any kind.</strong></p>
+      <p><strong>Green Onions has no accounts, no advertising, and no tracking.</strong></p>
     </div>
     <p>
-      Nothing you do in the app is recorded, profiled, or sold, and nothing identifies you.
+      The app counts a few things about how it is used, such as that it was opened and that a
+      song was played, so I can see whether people come back to it. Those counts are anonymous
+      and never say what you listened to. Nothing is sold, and nothing identifies you.
     </p>
     <p>
       The app is not entirely offline any more. If you connect Apple Music, Green Onions talks to
@@ -103,8 +104,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>What the app sends over the network</h2>
     <p>
-      Green Onions has no servers of its own, and no data about you is sent anywhere. It makes three
-      kinds of outbound request, all of them in service of playing a song:
+      Green Onions has no servers of its own. Three kinds of outbound request serve the music, and
+      the fourth is the anonymous counts described in the next section:
     </p>
     <ul>
       <li><strong>Apple Music (Apple).</strong> Listing your playlists, fetching their contents, and
@@ -124,16 +125,44 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       kept.</li>
     </ul>
     <p>
-      These requests happen when you open an Apple Music playlist. If you never connect Apple Music,
-      the app makes no network connections at all.
+      These three happen when you open an Apple Music playlist. If you never connect Apple Music,
+      the app's only network traffic is the counts below, and music you add from Files plays the
+      same with no connection at all.
+    </p>
+
+    <h2 id="counts">What the app counts</h2>
+    <p>
+      Starting with version 1.3.1, Green Onions reports a few things about itself to an analytics
+      service, <strong>TelemetryDeck</strong>:
+    </p>
+    <ul>
+      <li>that the app was opened;</li>
+      <li>that a song played for more than 75 seconds, with the pace you had set, whether the song
+      was the built-in demo, one of your own files, or from Apple Music, and whether you had changed
+      the pace from the Lock Screen;</li>
+      <li>that the 25 free songs were used up;</li>
+      <li>that Green Onions Pro was bought, and which screen it was bought from.</li>
+    </ul>
+    <p>
+      Each report carries an anonymous identifier made from your device, hashed on the phone so it
+      can't be turned back into anything about you, along with the kind of phone, its iOS version,
+      the app's version, your language, region and time zone, and a few display settings such as
+      text size, Dark Mode and Reduce Motion. It never carries a song title, an artist, a playlist,
+      or anything you typed, and never your name or email, because the app doesn't have them.
+    </p>
+    <p>
+      TelemetryDeck shows me totals: how many people opened the app today, how many came back this
+      month, which paces people run at. The counts are not linked to you, not used for advertising,
+      and not used to follow you across other apps or websites. TelemetryDeck's own policy is at
+      <a href="https://telemetrydeck.com/privacy/">telemetrydeck.com/privacy</a>.
     </p>
 
     <h2>What the app collects</h2>
     <p>
-      <strong>Nothing.</strong> Green Onions has no servers, no accounts, and no analytics. It does
-      not collect personal information, usage data, location, contacts, identifiers, or diagnostics.
-      Your song library, your detected and edited BPM values, and your pace settings are stored only
-      in the app's local storage on your device.
+      <strong>Only the anonymous counts above.</strong> Green Onions has no servers and no accounts.
+      It does not collect personal information, location, contacts, or diagnostics, and nothing it
+      sends is linked to you. Your song library, your detected and edited BPM values, and your pace
+      settings are stored only in the app's local storage on your device.
     </p>
 
     <h2>Accounts</h2>
@@ -145,17 +174,18 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>Third parties</h2>
     <p>
-      <strong>The app</strong> includes no third-party analytics, advertising, tracking, or software
-      development kits. The only outside services it contacts are <strong>Apple</strong>, for Apple
-      Music playback, and <strong>Deezer</strong>, for tempo data — both described above, and neither
-      one told anything about you. <strong>This website</strong> is a different matter, and it's
-      described <a href="#website">below</a>.
+      <strong>The app</strong> includes one third-party software kit, <strong>TelemetryDeck</strong>,
+      for the anonymous counts described above, and no advertising or tracking of any kind. The
+      other outside services it contacts are <strong>Apple</strong>, for Apple Music playback, and
+      <strong>Deezer</strong>, for tempo data. Neither of those is told anything about you.
+      <strong>This website</strong> is a different matter, and it's described
+      <a href="#website">below</a>.
     </p>
 
     <h2>Children</h2>
     <p>
-      Green Onions does not collect personal data from users of any age. No personal information is
-      ever gathered, from anyone.
+      Green Onions does not collect personal data from users of any age. The anonymous counts above
+      identify no one.
     </p>
 
     <h2>Data storage and deletion</h2>
@@ -164,6 +194,10 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       <li>Delete individual songs from within the app's Library at any time.</li>
       <li>Deleting the Green Onions app from your device removes all of its data permanently.</li>
     </ul>
+    <p>
+      The anonymous counts can't be connected back to you, so there is nothing on our side to look
+      up or delete.
+    </p>
 
     <h2>Apple</h2>
     <p>
@@ -178,9 +212,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
          different answers; that divergence is intentional, not drift. Don't "sync" it away. -->
     <h2 id="website">This website</h2>
     <p>
-      greenonions.app is separate from the app, and unlike the app it does rely on two outside
-      services. Neither one has any connection to the app, and neither can see anything about your
-      music.
+      greenonions.app is separate from the app, and it relies on two outside services of its own.
+      Neither one has any connection to the app, and neither can see anything about your music.
     </p>
     <ul>
       <li><strong>GoatCounter</strong> counts page visits and taps on the App Store button, so I
