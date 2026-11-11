@@ -61,7 +61,7 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective date: November 9, 2026</p>
+    <p class="updated">Effective date: November 11, 2026</p>
 
     <h2>The short version</h2>
     <div class="callout">
@@ -146,16 +146,47 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       <li>that Green Onions Pro was bought, and which screen it was bought from.</li>
     </ul>
     <p>
-      Each report carries an anonymous identifier made from your device, hashed on the phone so it
-      can't be turned back into anything about you, along with the kind of phone, its iOS version,
-      the app's version, your language, region and time zone, and a few display settings such as
-      text size, Dark Mode and Reduce Motion. It never carries a song title, an artist, a playlist,
-      or anything you typed, and never your name or email, because the app doesn't have them.
+      TelemetryDeck's software kit, which is built into the app, sends two reports of its own: one
+      when a session starts (each launch, and each return after more than five minutes away), and
+      one the first time it runs on your phone.
+    </p>
+    <p>
+      The kit adds the same details to every report, the five above and its own two. This is all
+      of them:
+    </p>
+    <ul>
+      <!-- Mirrors DefaultSignalPayload, SessionManager and SignalManager in TelemetryDeck's
+           SwiftSDK 2.14.2, the version 1.3.1 ships with. A new SDK version can add fields:
+           re-read its Signal+Helpers.swift and update this list (and PRIVACY.md) with it. -->
+      <li><strong>An anonymous identifier.</strong> iOS gives each app developer a random
+      identifier for your phone, different for every developer. The kit runs it through a one-way
+      hash (SHA-256) on the phone and sends only the result, which can't be turned back into the
+      identifier. Each report also carries a random session code, new with every session.</li>
+      <li><strong>Your phone and its settings.</strong> The model, its iOS version, the screen's
+      size and pixel density, and whether it was held upright or sideways. Your language settings,
+      the region chosen in Settings (not your location), and the time zone, sent as an offset such
+      as UTC+1. Light or Dark Mode, and whether your language reads left to right. Your text size,
+      and whether Bold Text, Reduce Motion, Reduce Transparency, Increase Contrast, Classic Invert
+      or Differentiate Without Color is on.</li>
+      <li><strong>The app.</strong> Its version and build number, the processor type it was built
+      for, the kit's version, and whether it's an App Store copy or a test build.</li>
+      <li><strong>When.</strong> The date and time the report was made, also broken out into the
+      hour, the weekday, the day of the month and of the year, the week, the month and the quarter,
+      and whether it fell on a weekend.</li>
+      <li><strong>How the app gets used over time.</strong> The date it was first opened, how many
+      sessions there have been, how long the last one lasted and how long they last on average, and
+      on how many different days it has been used, overall and in the last 30 days. The kit keeps
+      this tally on your phone, in the app's own storage.</li>
+    </ul>
+    <p>
+      No report carries a song title, an artist, a playlist, or anything you typed, and never your
+      name or email, because the app doesn't have them.
     </p>
     <p>
       TelemetryDeck shows me totals: how many people opened the app today, how many came back this
       month, which paces people run at. The counts are not linked to you, not used for advertising,
-      and not used to follow you across other apps or websites. TelemetryDeck's own policy is at
+      and not used to follow you across other apps or websites. TelemetryDeck's server, like any
+      web server, sees the IP address the reports come from. TelemetryDeck's own policy is at
       <a href="https://telemetrydeck.com/privacy/">telemetrydeck.com/privacy</a>.
     </p>
 
