@@ -61,6 +61,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
+    <!-- 2.0 (Podcasts): set this to the day 2.0 goes live when this branch is merged, and
+         say so in 2.0's What's New (the policy promises release notes for changes). -->
     <p class="updated">Effective date: November 11, 2026</p>
 
     <h2>The short version</h2>
@@ -75,7 +77,9 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <p>
       The app is not entirely offline any more. If you connect Apple Music, Green Onions talks to
       Apple to list your playlists and stream your songs, and it asks one music database for the
-      tempo of a song it can't measure itself. What gets sent is described below, in full. Music
+      tempo of a song it can't measure itself. Podcasts come from Apple's podcast directory and
+      from each show's own server, the way they do in any podcast app. What gets sent is
+      described below, in full. Music
       stored on your device never leaves it. (This website is a separate thing from the app; it's
       covered <a href="#website">at the bottom</a>.)
     </p>
@@ -96,6 +100,10 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       asks for your permission first. When granted, Green Onions reads your playlists and their
       contents so it can list them and play them at your cadence. It does not modify your playlists,
       your library, or your listening history.</li>
+      <li><strong>Audio and subscription files you pick for Podcasts.</strong> An audio file you add
+      from Files, or open in Green Onions, is copied into the app's own storage. A subscription list
+      exported from another podcast app is read for the shows' feed addresses, which the app then
+      follows.</li>
     </ul>
     <p>
       Music that lives on your device stays <strong>on your device</strong>. It is never uploaded
@@ -104,8 +112,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>What the app sends over the network</h2>
     <p>
-      Green Onions has no servers of its own. Three kinds of outbound request serve the music, and
-      the fourth is the anonymous counts described in the next section:
+      Green Onions has no servers of its own. Three kinds of outbound request serve the music,
+      three serve podcasts, and the last is the anonymous counts described in the next section:
     </p>
     <ul>
       <li><strong>Apple Music (Apple).</strong> Listing your playlists, fetching their contents, and
@@ -123,11 +131,24 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       downloads the song's public 30-second preview clip from Apple's catalog and measures the tempo
       from it on your device. The clip is analyzed and discarded; only the resulting number is
       kept.</li>
+      <li><strong>Podcast directory (Apple).</strong> The podcast rows come from Apple's public
+      podcast charts for your region (the one chosen in Settings), and Green Onions looks those
+      shows up in Apple's directory. A podcast search sends the words you type to Apple's public
+      podcast search, as any search box does, and an Apple Podcasts link you paste is looked up
+      there too. No account and no device identifier go with them.</li>
+      <li><strong>Each show's own server.</strong> A show's page reads the show's public feed, and
+      an episode you play is downloaded from wherever the show keeps it, the way any podcast app
+      does it. Artwork loads from the same places. Those servers see the IP address the request
+      came from and that it came from Green Onions.</li>
+      <li><strong>The list of podcast rows (this website).</strong> Once a launch, the app asks
+      greenonions.app whether the list of podcast rows has changed. It's a plain file request with
+      nothing about you in it; this site's host, GitHub, sees the IP address it came from.</li>
     </ul>
     <p>
-      These three happen when you open an Apple Music playlist. If you never connect Apple Music,
-      the app's only network traffic is the counts below, and music you add from Files plays the
-      same with no connection at all.
+      The music requests happen when you open an Apple Music playlist, and the podcast ones when
+      you open Library or a show and when an episode downloads. Without Apple Music or podcasts,
+      the app's only network traffic is the counts below, and music you add from Files, like an
+      episode you've downloaded, plays with no connection at all.
     </p>
 
     <h2 id="counts">What the app counts</h2>
@@ -142,7 +163,10 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       <li>that a song played for more than 75 seconds, with the pace you had set, whether the song
       was the built-in demo, one of your own files, or from Apple Music, and whether you had changed
       the pace from the Lock Screen;</li>
-      <li>that the 25 free songs were used up;</li>
+      <li>that a podcast played for another five minutes, with the pace you had set and whether
+      you had changed the pace from the Lock Screen (never which show or episode);</li>
+      <li>that the free trial was used up, and whether the 25 songs or the hour of podcasts ran
+      out first;</li>
       <li>that Green Onions Pro was bought, and which screen it was bought from.</li>
     </ul>
     <p>
@@ -151,7 +175,7 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       one the first time it runs on your phone.
     </p>
     <p>
-      The kit adds the same details to every report, the five above and its own two. This is all
+      The kit adds the same details to every report, the six above and its own two. This is all
       of them:
     </p>
     <ul>
@@ -179,8 +203,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       this tally on your phone, in the app's own storage.</li>
     </ul>
     <p>
-      No report carries a song title, an artist, a playlist, or anything you typed, and never your
-      name or email, because the app doesn't have them.
+      No report carries a song title, an artist, a playlist, a podcast, an episode, or anything
+      you typed, and never your name or email, because the app doesn't have them.
     </p>
     <p>
       TelemetryDeck shows me totals: how many people opened the app today, how many came back this
@@ -194,8 +218,9 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <p>
       <strong>Only the anonymous counts above.</strong> Green Onions has no servers and no accounts.
       It does not collect personal information, location, contacts, or diagnostics, and nothing it
-      sends is linked to you. Your song library, your detected and edited BPM values, and your pace
-      settings are stored only in the app's local storage on your device.
+      sends is linked to you. Your song library, your detected and edited BPM values, your pace
+      settings, and your downloaded episodes, followed shows and places in them are stored only in
+      the app's local storage on your device.
     </p>
 
     <h2>Accounts</h2>
@@ -209,8 +234,9 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <p>
       <strong>The app</strong> includes one third-party software kit, <strong>TelemetryDeck</strong>,
       for the anonymous counts described above, and no advertising or tracking of any kind. The
-      other outside services it contacts are <strong>Apple</strong>, for Apple Music playback, and
-      <strong>Deezer</strong>, for tempo data. Neither of those is told anything about you.
+      other outside services it contacts are <strong>Apple</strong>, for Apple Music playback and
+      its podcast directory, <strong>Deezer</strong>, for tempo data, and each podcast's own
+      server, for its feed and episodes. None of those is told anything about you.
       <strong>This website</strong> is a different matter, and it's described
       <a href="#website">below</a>.
     </p>
