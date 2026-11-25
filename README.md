@@ -50,3 +50,15 @@ CNAME www   mastermeise.github.io
 
 `.app` is HSTS-preloaded, so HTTPS is mandatory — "Enforce HTTPS" must stay enabled in
 repo Settings → Pages.
+
+## podcasts/rows.json
+
+The app (2.0 and later) reads this file once a launch for the rows on Library →
+Podcasts: a name and the Apple podcast categories that fill it. No file, or a file that
+doesn't read, and the app keeps the rows built into it. Nothing links to it, so it isn't
+in the sitemap.
+
+Build and check it with `marketing-2.0/rows.py` in the app repo (`wip/talks`). January
+2027's row, "First runs of the year", comes out again on 1 Feb:
+
+    python3 -c "import json;p='podcasts/rows.json';d=json.load(open(p));d['rows']=[r for r in d['rows'] if r['id']!='firstruns2027'];json.dump(d,open(p,'w'),ensure_ascii=False,indent=1)"
