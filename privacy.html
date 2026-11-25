@@ -112,7 +112,7 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
 
     <h2>What the app sends over the network</h2>
     <p>
-      Green Onions has no servers of its own. Three kinds of outbound request serve the music,
+      Green Onions has no servers of its own. Four kinds of outbound request serve the music,
       three serve podcasts, and the last is the anonymous counts described in the next section:
     </p>
     <ul>
@@ -131,6 +131,11 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       downloads the song's public 30-second preview clip from Apple's catalog and measures the tempo
       from it on your device. The clip is analyzed and discarded; only the resulting number is
       kept.</li>
+      <li><strong>Finding the beat (Shazam, Apple).</strong> When the metronome is on over an Apple
+      Music song, Green Onions also uses that preview clip to find where the beats fall. It makes a
+      Shazam signature of the clip on your device and sends the signature to Apple's Shazam service,
+      which answers with where the clip sits in the song. The signature is made from Apple's own
+      clip, never from the microphone or your music, and the clip is discarded afterwards.</li>
       <li><strong>Podcast directory (Apple).</strong> The podcast rows come from Apple's public
       podcast charts for your region (the one chosen in Settings), and Green Onions looks those
       shows up in Apple's directory. A podcast search sends the words you type to Apple's public
@@ -145,8 +150,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
       nothing about you in it; this site's host, GitHub, sees the IP address it came from.</li>
     </ul>
     <p>
-      The music requests happen when you open an Apple Music playlist, and the podcast ones when
-      you open Library or a show and when an episode downloads. Without Apple Music or podcasts,
+      The music requests happen when you open an Apple Music playlist or turn the metronome on over
+      an Apple Music song, and the podcast ones when you open Library or a show and when an episode downloads. Without Apple Music or podcasts,
       the app's only network traffic is the counts below, and music you add from Files, like an
       episode you've downloaded, plays with no connection at all.
     </p>
@@ -234,8 +239,8 @@ footer a:hover{color:var(--lime);border-color:var(--lime)}
     <p>
       <strong>The app</strong> includes one third-party software kit, <strong>TelemetryDeck</strong>,
       for the anonymous counts described above, and no advertising or tracking of any kind. The
-      other outside services it contacts are <strong>Apple</strong>, for Apple Music playback and
-      its podcast directory, <strong>Deezer</strong>, for tempo data, and each podcast's own
+      other outside services it contacts are <strong>Apple</strong>, for Apple Music playback,
+      Shazam and its podcast directory, <strong>Deezer</strong>, for tempo data, and each podcast's own
       server, for its feed and episodes. None of those is told anything about you.
       <strong>This website</strong> is a different matter, and it's described
       <a href="#website">below</a>.
